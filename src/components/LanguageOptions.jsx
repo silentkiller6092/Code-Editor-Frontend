@@ -112,8 +112,8 @@ function LanguageOptions() {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row">
-        <div className="md:w-3/5 w-full">
+      <div className="flex flex-col md:flex-row mx-3">
+        <div className="md:w-3/5 w-full ">
           <CodeEditor
             code={code}
             onChange={handleCodeChange}
@@ -128,7 +128,8 @@ function LanguageOptions() {
           />
         </div>
 
-        <div className="md:w-2/5 w-full">
+        <div className="md:w-2/5 w-full border-t-2 md:border-none">
+          <h2 className="text-center">Output</h2>
           <Output result={result} />
         </div>
       </div>

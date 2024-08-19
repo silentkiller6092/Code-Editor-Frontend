@@ -2,6 +2,7 @@
   width: rem(80px);
   height: rem(750px);
   padding: var(--mantine-spacing-md);
+  position: fixed;
   display: flex;
   flex-direction: column;
   border-right: rem(1px) solid
@@ -17,6 +18,7 @@
   width: calc(3.125rem * var(--mantine-scale));
   height: calc(3.125rem * var(--mantine-scale));
   border-radius: var(--mantine-radius-md);
+
   display: flex;
   align-items: center;
   justify-content: center;
