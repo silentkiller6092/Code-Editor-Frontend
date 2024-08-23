@@ -8,6 +8,8 @@ import LanguageOptions from "./components/LanguageOptions";
 import { NavbarMinimal } from "./components/Navbar";
 import GlobeDemo from "./components/Home";
 
+import WorkSpace from "./components/WorkSpace";
+
 function App() {
   const [opened, { toggle }] = useDisclosure();
 
@@ -32,16 +34,19 @@ function App() {
                   size="sm"
                   color="rgb(191 219 254)"
                 />
-                <Text ml="xs" size="xl" color="rgb(191 219 254)">
+
+                <Text size="xl" ml={14} color="rgb(191 219 254)">
                   CodeSphere
                 </Text>
               </Flex>
-              <IconBrandVscode
-                size={50}
-                style={{ marginRight: "10px" }}
-                strokeWidth={1}
-                color="rgb(191 219 254)"
-              />
+              <Flex align="center">
+                <IconBrandVscode
+                  size={50}
+                  style={{ marginRight: "10px" }}
+                  strokeWidth={1}
+                  color="rgb(191 219 254)"
+                />
+              </Flex>
             </Flex>
           </AppShell.Header>
 
@@ -57,6 +62,7 @@ function App() {
             <Routes>
               <Route path="/" element={<GlobeDemo />} />
               <Route path="/code-editor" element={<LanguageOptions />} />
+              <Route path="/workspace" element={<WorkSpace />} />
             </Routes>
           </AppShell.Main>
         </AppShell>

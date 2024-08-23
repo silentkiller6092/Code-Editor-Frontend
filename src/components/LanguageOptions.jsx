@@ -1,11 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import CodeEditor from "./CodeEditor";
-import { Flex, keys, Select } from "@mantine/core";
-import {
-  IconDeviceFloppy,
-  IconPlayerPlay,
-  IconBraces,
-} from "@tabler/icons-react";
+import { Select } from "@mantine/core";
+import { IconDeviceFloppy, IconPlayerPlay } from "@tabler/icons-react";
 import Buttons from "./Buttons";
 import Output from "./Output";
 
@@ -14,7 +10,6 @@ function LanguageOptions() {
   const [result, setResult] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [language, setLanguage] = useState("javascript");
-  const [isSaved, setIsSaved] = useState(false);
   const editorRef = useRef(null);
 
   const handleCodeChange = (newCode) => {
@@ -37,6 +32,7 @@ function LanguageOptions() {
     }
   };
 
+  const saveCode = () => {};
   useEffect(() => {
     const handleKeydown = (event) => {
       if (event.shiftKey && event.key === "Enter" && isFocused) {
@@ -50,29 +46,27 @@ function LanguageOptions() {
     };
   }, [isFocused]);
 
-  const saveCode = async () => {
-    console.log("Saving code");
-    setIsSaved(true);
-  };
-
   return (
     <div>
       <div
-        className="bg-[rgba(30,30,30,255)]"
+        className="bg-[rgba(30,30,30,255)] mt-0"
         style={{ borderBottom: "0.1px solid #C0C0C0" }}
       >
-        <div className="flex justify-between items-center p-1">
+        <div className="flex justify-between items-center">
           <Select
             placeholder="Pick a language"
-            className="mb-2 ml-2 text-white"
+            className="mb-1  text-white"
+            withScrollArea={false}
             styles={{
+              dropdown: {
+                maxHeight: 200,
+                overflowY: "auto",
+                backgroundColor: "rgba(30,30,30,255)",
+                color: "#c0cee7",
+              },
               input: {
                 backgroundColor: "rgba(30,30,30,255)",
                 border: "none",
-                color: "#c0cee7",
-              },
-              dropdown: {
-                backgroundColor: "rgba(30,30,30,255)",
                 color: "#c0cee7",
               },
               item: {
@@ -93,10 +87,19 @@ function LanguageOptions() {
               { value: "java", label: "Java" },
               { value: "html", label: "HTML" },
               { value: "css", label: "CSS" },
+              { value: "ruby", label: "Ruby" },
+              { value: "php", label: "PHP" },
+              { value: "typescript", label: "TypeScript" },
+              { value: "swift", label: "Swift" },
+              { value: "kotlin", label: "Kotlin" },
+              { value: "csharp", label: "C#" },
+              { value: "rust", label: "Rust" },
+              { value: "scala", label: "Scala" },
             ]}
             value={language}
             onChange={setLanguage}
           />
+
           <div className="flex space-x-2">
             <Buttons
               IconName={IconPlayerPlay}
@@ -112,7 +115,7 @@ function LanguageOptions() {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row mx-3">
+      <div className="flex flex-col md:flex-row ">
         <div className="md:w-3/5 w-full ">
           <CodeEditor
             code={code}
@@ -129,7 +132,7 @@ function LanguageOptions() {
         </div>
 
         <div className="md:w-2/5 w-full border-t-2 md:border-none">
-          <h2 className="text-center">Output</h2>
+          <h2 className="md:hidden text-center">Output</h2>
           <Output result={result} />
         </div>
       </div>

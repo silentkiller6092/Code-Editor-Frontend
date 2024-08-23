@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tooltip, UnstyledButton, Stack, ScrollArea } from "@mantine/core";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   IconHome2,
   IconCode,
@@ -69,13 +69,6 @@ const mockdata = [
     linkClicked: "/workspace",
   },
   {
-    icon: IconBriefcase,
-    label: "Projects",
-    color: "rgb(94 234 212)", // Teal
-    glowColor: "#00ffff", // Cyan Glow
-    linkClicked: "/projects",
-  },
-  {
     icon: IconUser,
     label: "Account",
     color: "rgb(255 159 64)", // Orange
@@ -113,7 +106,18 @@ const mockdata = [
 ];
 
 export function NavbarMinimal() {
-  const [active, setActive] = useState(2);
+  const location = useLocation();
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const activeIndex = mockdata.findIndex(
+      (link) => link.linkClicked === currentPath
+    );
+    if (activeIndex !== -1) {
+      setActive(activeIndex);
+    }
+  }, [location.pathname]);
 
   const links = mockdata.map((link, index) => (
     <NavbarLink

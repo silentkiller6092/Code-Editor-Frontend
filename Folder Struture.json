@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Project A",
+    "tag": "javascript",
+    "files": ["index.js", "style.css", "Test.js"],
+    "date_created": "date",
+    "date_modified": "date"
+  },
+
+  {
+    "name": "Project B",
+    "tag": "javascript",
+    "files": ["app.js", "main.css"],
+    "date_created": "date",
+    "date_modified": "date"
+  }
+]
