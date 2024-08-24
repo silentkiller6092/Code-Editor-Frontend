@@ -7,18 +7,55 @@ function UseExistingProject() {
   const [projectDetails, setProjectDetails] = useState({
     projectName: "",
     tag: "javascript",
-    files: [],
+    files: [
+      {
+        name: "",
+        dateCreated: "",
+        dateModified: "",
+      },
+    ],
   });
 
   const [fileName, setFileName] = useState("");
   const [optionEnabled, setOptionEnabled] = useState(false);
   const [updatedProject, setUpdatedProject] = useState(null);
   const [existingProjects, setExistingProjects] = useState([
-    { name: "Project A", tag: "javascript", files: ["index.js", "style.css"] },
-    { name: "Project B", tag: "javascript", files: ["app.js", "main.css"] },
+    {
+      name: "Project A",
+      tag: "javascript",
+      files: [
+        {
+          name: "index.js",
+          dateCreated: "2023-07-24",
+          dateModified: "2023-08-24",
+        },
+        {
+          name: "style.css",
+          dateCreated: "2023-08-24",
+          dateModified: "2023-08-24",
+        },
+      ],
+    },
+    {
+      name: "Project B",
+      tag: "javascript",
+      files: [
+        {
+          name: "app.js",
+          dateCreated: "2023-08-24",
+          dateModified: "2023-08-24",
+        },
+        {
+          name: "main.css",
+          dateCreated: "2023-08-24",
+          dateModified: "2023-08-24",
+        },
+      ],
+    },
   ]);
 
   const createProject = () => {
+    const currentDate = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
     let updatedProjects = [];
 
     if (optionEnabled) {
@@ -28,7 +65,11 @@ function UseExistingProject() {
           const updatedProject = {
             ...project,
             tag: projectDetails.tag, // Use the updated tag
-            files: [...project.files, ...projectDetails.files],
+            files: project.files.map((file) =>
+              file.name === projectDetails.files.name
+                ? { ...file, dateModified: currentDate }
+                : file
+            ),
           };
           setUpdatedProject(updatedProject); // Set the updated project for later use
           return updatedProject;
@@ -39,7 +80,11 @@ function UseExistingProject() {
       const newProject = {
         name: projectDetails.projectName,
         tag: projectDetails.tag,
-        files: [...projectDetails.files],
+        files: projectDetails.files.map((file) => ({
+          ...file,
+          dateCreated: currentDate,
+          dateModified: currentDate,
+        })),
       };
       updatedProjects = [...existingProjects, newProject];
       setUpdatedProject(newProject); // Set the new project for later use
@@ -60,7 +105,13 @@ function UseExistingProject() {
       setProjectDetails((prev) => ({
         ...prev,
         projectName: "", // Reset project name
-        files: [], // Reset files array
+        files: [
+          {
+            name: "",
+            dateCreated: "",
+            dateModified: "",
+          },
+        ], // Reset files array
       }));
     } else {
       setOptionEnabled(true);
@@ -78,13 +129,21 @@ function UseExistingProject() {
   };
 
   const handleAddFile = () => {
+    const currentDate = new Date().toISOString().split("T")[0];
     if (fileName.trim()) {
       if (optionEnabled) {
         // Update existingProjects and projectDetails
         setExistingProjects((prevProjects) => {
           return prevProjects.map((project) => {
             if (project.name === projectDetails.projectName) {
-              const updatedFiles = [...project.files, fileName];
+              const updatedFiles = [
+                ...project.files,
+                {
+                  name: fileName,
+                  dateCreated: currentDate,
+                  dateModified: currentDate,
+                },
+              ];
               setProjectDetails((prevDetails) => ({
                 ...prevDetails,
                 files: updatedFiles,
@@ -95,18 +154,24 @@ function UseExistingProject() {
           });
         });
       } else {
-        // Add the file to the projectDetails as a string
+        // Add the file to the projectDetails as an object with dates
         setProjectDetails((prev) => ({
           ...prev,
-          files: [...prev.files, fileName],
+          files: [
+            ...prev.files,
+            {
+              name: fileName,
+              dateCreated: currentDate,
+              dateModified: currentDate,
+            },
+          ],
         }));
       }
       setFileName("");
     }
   };
-
   return (
-    <div className="bg-[#1e1c1cdb] px-4 text-center shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-sm relative min-h-96">
+    <div className="bg-[#1e1c1cdb] px-4 mx-2 text-center shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-sm relative min-h-96 max-h-[500px] overflow-y-auto">
       <h1
         className="title-font sm:text-2xl text-[18px]  mb-3 pt-6 fontChange"
         style={{ borderBottom: "0.1px solid #C0C0C0" }}
@@ -145,18 +210,18 @@ function UseExistingProject() {
             {optionEnabled ? (
               <div>
                 <label
-                  htmlFor="project-files" // Changed id for clarity
+                  htmlFor="project-files"
                   className="block mb-2 text-sm sm:text-[12px] xl:text-[14px] text-left font-medium dark:text-[#bcbbbb]"
                 >
                   Project Files
                 </label>
                 <select
-                  id="project-files" // Changed id for clarity
+                  id="project-files"
                   className="bg-gray-50 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[rgba(30,30,30,255)] dark:border-gray-600 dark:placeholder-gray-400 dark:text-[#c0cee7] dark:focus:ring-blue-500 dark:focus:border-blue-500 scroll-smooth"
                 >
                   {projectDetails.files.map((file, index) => (
                     <option key={index} value={file}>
-                      {file}
+                      {file.name}
                     </option>
                   ))}
                 </select>
@@ -253,7 +318,7 @@ function UseExistingProject() {
             <div className="w-full">
               <ul className="mt-3 flex flex-wrap gap-2 text-left dark:text-[#bcbbbb] text-sm sm:text-[12px] xl:text-[14px]">
                 {projectDetails.files.map((file, index) => (
-                  <li key={index}>{file}</li>
+                  <li key={index}>{file.name}</li>
                 ))}
               </ul>
             </div>
@@ -264,7 +329,7 @@ function UseExistingProject() {
           <button
             type="button"
             onClick={createProject}
-            class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+            className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
           >
             {" "}
             {optionEnabled ? "Update Project" : "Create Project"}
