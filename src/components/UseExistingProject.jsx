@@ -170,10 +170,11 @@ function UseExistingProject() {
       setFileName("");
     }
   };
+
   return (
-    <div className="bg-[#1e1c1cdb] px-4 mx-2 text-center shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-sm relative min-h-96 max-h-[500px] overflow-y-auto">
+    <div className="bg-[#1e1c1cdb] px-4 mx-2 text-center shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-sm relative min-h-96  h-96  overflow-scroll">
       <h1
-        className="title-font sm:text-2xl text-[18px]  mb-3 pt-6 fontChange"
+        className="title-font sm:text-2xl text-[18px]  mb-3 pt-3 fontChange"
         style={{ borderBottom: "0.1px solid #C0C0C0" }}
       >
         Create New Project <span className="text-gray-400">||</span> Use

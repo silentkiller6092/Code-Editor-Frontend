@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Input, CloseButton } from "@mantine/core";
 import {
   IconFolder,
   IconFolderOpen,
   IconFileText,
   IconBrandGolang,
   IconFileCode,
+  IconSearch,
 } from "@tabler/icons-react";
 
-function FolderStructure() {
+function AllProjectUserWorked() {
+  const [value, setValue] = useState("");
   const projects = [
     {
       name: "Project A",
@@ -20,31 +23,6 @@ function FolderStructure() {
         },
         {
           name: "style.css",
-          dateCreated: "2023-08-24",
-          dateModified: "2023-08-24",
-        },
-        {
-          name: "style",
-          dateCreated: "2023-08-24",
-          dateModified: "2023-08-24",
-        },
-        {
-          name: "style",
-          dateCreated: "2023-08-24",
-          dateModified: "2023-08-24",
-        },
-        {
-          name: "style",
-          dateCreated: "2023-08-24",
-          dateModified: "2023-08-24",
-        },
-        {
-          name: "style",
-          dateCreated: "2023-08-24",
-          dateModified: "2023-08-24",
-        },
-        {
-          name: "style",
           dateCreated: "2023-08-24",
           dateModified: "2023-08-24",
         },
@@ -66,6 +44,7 @@ function FolderStructure() {
         },
       ],
     },
+    // Add other projects as needed
   ];
 
   const [openFolders, setOpenFolders] = useState(
@@ -88,6 +67,16 @@ function FolderStructure() {
     return <IconFileText className="text-gray-500" />;
   };
 
+  const filteredProjects = projects.filter((project) => {
+    const projectMatches = project.name
+      .toLowerCase()
+      .includes(value.toLowerCase());
+    const filesMatch = project.files.some((file) =>
+      file.name.toLowerCase().includes(value.toLowerCase())
+    );
+    return projectMatches || filesMatch;
+  });
+
   return (
     <div>
       <div className="bg-[#1e1c1cdb] px-5 text-center shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-sm relative min-h-96 h-96  overflow-scroll">
@@ -95,11 +84,26 @@ function FolderStructure() {
           className="title-font sm:text-2xl text-xl mb-3 fontChange pt-3"
           style={{ borderBottom: "0.1px solid #C0C0C0" }}
         >
-          Most Recent Projects You Worked
+          All the Projects You Have Worked On
         </h1>
+        <Input
+          placeholder="Search Your Project"
+          value={value}
+          onChange={(event) => setValue(event.currentTarget.value)}
+          rightSectionPointerEvents="all"
+          mt="md"
+          leftSection={<IconSearch />}
+          rightSection={
+            <CloseButton
+              aria-label="Clear input"
+              onClick={() => setValue("")}
+              style={{ display: value ? undefined : "none" }}
+            />
+          }
+        />
 
         <div className="">
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <div key={index} className="mb-4">
               {/* Project Folder */}
               <div
@@ -153,4 +157,4 @@ function FolderStructure() {
   );
 }
 
-export default FolderStructure;
+export default AllProjectUserWorked;
