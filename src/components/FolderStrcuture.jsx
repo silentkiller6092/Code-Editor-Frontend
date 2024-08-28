@@ -4,7 +4,12 @@ import {
   IconFolderOpen,
   IconFileText,
   IconBrandGolang,
-  IconFileCode,
+  IconBrandJavascript,
+  IconHtml,
+  IconCoffee,
+  IconBrandPython,
+  IconBrandSass,
+  IconSearch,
 } from "@tabler/icons-react";
 
 function FolderStructure() {
@@ -82,9 +87,15 @@ function FolderStructure() {
     if (file.name.endsWith(".go"))
       return <IconBrandGolang className="text-gray-500" />;
     if (file.name.endsWith(".js"))
-      return <IconFileCode className="text-yellow-500" />;
+      return <IconBrandJavascript className="text-pink-500" />;
+    if (file.name.endsWith(".html"))
+      return <IconHtml className="text-yellow-500" />;
     if (file.name.endsWith(".css"))
-      return <IconFileText className="text-blue-500" />;
+      return <IconBrandSass className="text-blue-500" />;
+    if (file.name.endsWith(".py"))
+      return <IconBrandPython className="text-green-500" />;
+    if (file.name.endsWith(".java"))
+      return <IconCoffee className="text-red-500" />;
     return <IconFileText className="text-gray-500" />;
   };
 

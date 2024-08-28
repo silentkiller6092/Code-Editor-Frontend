@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Input, CloseButton } from "@mantine/core";
+import { Input, CloseButton, Button } from "@mantine/core";
+import { Outlet, Link } from "react-router-dom";
 import {
-  IconFolderOpen,
+  IconWorldWww,
+  IconBrandCodesandbox,
   IconFileText,
   IconBrandJavascript,
   IconHtml,
@@ -11,14 +13,21 @@ import {
   IconBrandSass,
   IconSearch,
 } from "@tabler/icons-react";
+import PrivateCodeEditor from "./PrivateCodeEditorSection";
 
-function AllProjectUserWorked() {
+function ProjectTemplate() {
   const [value, setValue] = useState("");
+
   const projects = [
     {
-      name: "Project A",
-      tag: "javascript",
+      name: " HTML CSS JS",
+      tag: "Web development",
       files: [
+        {
+          name: "index.html",
+          dateCreated: "2023-07-24",
+          dateModified: "2023-08-24",
+        },
         {
           name: "index.js",
           dateCreated: "2023-07-24",
@@ -32,16 +41,21 @@ function AllProjectUserWorked() {
       ],
     },
     {
-      name: "Project B",
-      tag: "javascript",
+      name: "Bootstrap ",
+      tag: "Web Development",
       files: [
         {
-          name: "app.js",
-          dateCreated: "2023-08-24",
+          name: "index.html",
+          dateCreated: "2023-07-24",
           dateModified: "2023-08-24",
         },
         {
-          name: "main.css",
+          name: "index.js",
+          dateCreated: "2023-07-24",
+          dateModified: "2023-08-24",
+        },
+        {
+          name: "style.css",
           dateCreated: "2023-08-24",
           dateModified: "2023-08-24",
         },
@@ -93,8 +107,9 @@ function AllProjectUserWorked() {
           className="title-font sm:text-2xl text-xl mb-3 fontChange pt-3"
           style={{ borderBottom: "0.1px solid #C0C0C0" }}
         >
-          All the Projects You Have Worked On
+          Project Templates
         </h1>
+
         <Input
           placeholder="Search Your Project"
           value={value}
@@ -115,22 +130,20 @@ function AllProjectUserWorked() {
         <div className="">
           {filteredProjects.map((project, index) => (
             <div key={index} className="mb-4">
-              {/* Project Folder */}
               <div
                 className="flex  cursor-pointer"
                 onClick={() => toggleFolder(index)}
               >
                 {openFolders[index] ? (
-                  <IconFolderOpen className="text-blue-500 " />
+                  <IconWorldWww className="text-blue-500 " />
                 ) : (
-                  <IconFolder className="text-blue-500" />
+                  <IconBrandCodesandbox className="text-blue-500" />
                 )}
 
                 <div className="">
-                  <span className="font-medium">{project.name}</span>
+                  <span className="font-medium"> {project.name}</span>
                 </div>
                 <div className="flex-1 flex justify-end items-center    gap-4">
-                  <span className="block text-[#a3c9cc]">Created On</span>
                   <span className="block text-[#a3c9cc]">Modified On</span>
                 </div>
               </div>
@@ -144,13 +157,13 @@ function AllProjectUserWorked() {
                       className="flex items-center space-x-2"
                     >
                       {getFileIcon(file)}
+
                       <div className="flex-1 flex justify-between items-center">
-                        <span>{file.name}</span>
+                        <Link to={"/template/1/htmlcss"}>
+                          <span>{file.name}</span>
+                        </Link>
                         <div className="text-right">
                           <div className="flex">
-                            <span className="block mr-6">
-                              {file.dateCreated}
-                            </span>
                             <span className="block">{file.dateModified}</span>
                           </div>
                         </div>
@@ -167,4 +180,4 @@ function AllProjectUserWorked() {
   );
 }
 
-export default AllProjectUserWorked;
+export default ProjectTemplate;

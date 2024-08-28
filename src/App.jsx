@@ -1,5 +1,6 @@
 import { AppShell, Burger, Group, MantineProvider } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import React, { useEffect, useState } from "react";
 import { Flex, Text } from "@mantine/core";
 import { IconBrandVscode } from "@tabler/icons-react";
 import "@mantine/core/styles.css";
@@ -9,6 +10,8 @@ import { NavbarMinimal } from "./components/Navbar";
 import GlobeDemo from "./components/Home";
 
 import WorkSpace from "./components/WorkSpace";
+import PrivateCodeEditor from "./components/PrivateCodeEditorSection";
+import EditorSettings from "./components/EditorSetting";
 
 function App() {
   const [opened, { toggle }] = useDisclosure();
@@ -63,6 +66,11 @@ function App() {
               <Route path="/" element={<GlobeDemo />} />
               <Route path="/code-editor" element={<LanguageOptions />} />
               <Route path="/workspace" element={<WorkSpace />} />
+              <Route path="/settings" element={<EditorSettings />} />
+              <Route
+                path="/template/:id/:type"
+                element={<PrivateCodeEditor />}
+              />
             </Routes>
           </AppShell.Main>
         </AppShell>
