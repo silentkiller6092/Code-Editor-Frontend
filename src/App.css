@@ -1,3 +1,7 @@
 .fontChange {
   font-family: "Roboto", sans-serif;
 }
+.removeFLex {
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+}

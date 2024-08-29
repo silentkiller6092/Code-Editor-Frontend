@@ -68,7 +68,7 @@ function App() {
               <Route path="/workspace" element={<WorkSpace />} />
               <Route path="/settings" element={<EditorSettings />} />
               <Route
-                path="/template/:id/:type"
+                path="/workspace/:id/:type"
                 element={<PrivateCodeEditor />}
               />
             </Routes>

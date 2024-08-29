@@ -1,22 +1,36 @@
 import React, { useState } from "react";
 import { Tabs, Button } from "@mantine/core";
+import Buttons from "./Buttons";
 import {
   IconBrandJavascript,
   IconHtml,
+  IconPlayerPlay,
   IconBrandPython,
   IconBrandGolang,
   IconBrandSass,
+  IconDeviceFloppy,
   IconCoffee,
+  IconExternalLink,
   IconFileText,
 } from "@tabler/icons-react";
 import PrivateEditor from "./templates/PrivateEditor";
+import Spinner from "./Spinner";
 
 function PrivateCodeEditorSection() {
   const initialFiles = [
     {
       name: "index.html",
-      content:
-        "<!DOCTYPE html><html><head><title>Example</title></head><body></body></html>",
+      content: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+</html>`,
     },
     {
       name: "style.css",
@@ -30,18 +44,15 @@ function PrivateCodeEditorSection() {
 
   const [files, setFiles] = useState(initialFiles);
   const [outputCode, setOutputCode] = useState("");
-
-  // Variables to store each file's code separately
   const [htmlCode, setHtmlCode] = useState(initialFiles[0].content);
   const [cssCode, setCssCode] = useState(initialFiles[1].content);
   const [jsCode, setJsCode] = useState(initialFiles[2].content);
-  console.log(htmlCode);
+  const [showSpinner, setShowSpinner] = useState(false);
   const handleEditorChange = (index, newValue) => {
     const updatedFiles = [...files];
     updatedFiles[index].content = newValue;
     setFiles(updatedFiles);
 
-    // Update respective code variables
     if (updatedFiles[index].name.endsWith(".html")) setHtmlCode(newValue);
     if (updatedFiles[index].name.endsWith(".css")) setCssCode(newValue);
     if (updatedFiles[index].name.endsWith(".js")) setJsCode(newValue);
@@ -89,35 +100,56 @@ function PrivateCodeEditorSection() {
       ${htmlCode || ""}
       <script>${jsCode || ""}</script>
     `;
-
     setOutputCode(combinedCode);
+  };
 
-    // Open new page with the output code
+  const openSpinner = () => {
+    setShowSpinner(true);
+    setTimeout(() => {
+      setShowSpinner(false);
+    }, 10000); // Spinner will turn off after 10 seconds
+  };
+  const handleOpenNewWindow = () => {
     const outputWindow = window.open();
-    outputWindow.document.write(combinedCode);
+    outputWindow.document.write(outputCode);
     outputWindow.document.close();
   };
 
   return (
-    <div>
+    <div className="">
       <Tabs defaultValue={files[0]?.name || ""}>
-        <Tabs.List>
-          {files.map((file) => (
-            <Tabs.Tab
-              key={file.name}
-              value={file.name}
-              leftSection={getFileIcon(file)}
-            >
-              {file.name}
-            </Tabs.Tab>
-          ))}
-          <Tabs.Tab value="output" leftSection={<IconFileText />}>
-            <span onClick={handleRunCode}> Output</span>
-          </Tabs.Tab>
-        </Tabs.List>
+        <div className="flex">
+          <Tabs.List className="flex w-full removeFLex">
+            <div className="flex space-x-2">
+              {files.map((file) => (
+                <Tabs.Tab
+                  key={file.name}
+                  value={file.name}
+                  leftSection={getFileIcon(file)}
+                >
+                  {file.name}
+                </Tabs.Tab>
+              ))}
+            </div>
+
+            {/* This div will take up the remaining space, pushing the Preview button to the right */}
+            <div className="ml-auto bg-[rgb(191 219 254)] flex justify-center items-center">
+              <Tabs.Tab
+                value="output"
+                leftSection={<IconPlayerPlay color="rgb(191 219 254)" />}
+                onClick={handleRunCode}
+              ></Tabs.Tab>
+              <Tabs.Tab
+                value="save"
+                onClick={openSpinner}
+                leftSection={<IconDeviceFloppy color="rgb(191 219 254)" />}
+              ></Tabs.Tab>
+            </div>
+          </Tabs.List>
+        </div>
 
         {files.map((file, index) => (
-          <Tabs.Panel key={file.name} value={file.name}>
+          <Tabs.Panel key={file.name} value={file.name} className="mr-10">
             <PrivateEditor
               code={file.content}
               language={getLanguageFromExtension(file.name)}
@@ -125,6 +157,26 @@ function PrivateCodeEditorSection() {
             />
           </Tabs.Panel>
         ))}
+        <Tabs.Panel value="output">
+          <div className="flex h-screen">
+            <div className="w-[90%]">
+              <iframe
+                title="output"
+                srcDoc={outputCode}
+                className="w-full h-screen border border-gray-300"
+              />
+            </div>
+            <div className="w-[10%] flex justify-start  bg-white">
+              <IconExternalLink
+                onClick={handleOpenNewWindow}
+                className="cursor-pointer text-black border-none"
+              />
+            </div>
+          </div>
+        </Tabs.Panel>
+        <Tabs.Panel value="save">
+          {showSpinner ? <Spinner /> : <div>Content Saved</div>}
+        </Tabs.Panel>
       </Tabs>
     </div>
   );

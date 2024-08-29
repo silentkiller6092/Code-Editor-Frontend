@@ -16,14 +16,17 @@ const PrivateEditor = ({ code, onChange, language }) => {
   return (
     <div style={{ height: "90vh", width: "100%", position: "relative" }}>
       <MonacoEditor
-        theme={settings.highContrast ? "hc-black" : settings.theme}
+        theme={settings.theme}
         language={language}
         value={code}
         onChange={(value) => onChange(value || "")}
         options={{
           automaticLayout: true, // Let Monaco handle resizing automatically
           lineNumbers: settings.lineNumbers,
-          minimap: { enabled: settings.minimap },
+          minimap: {
+            enabled: settings.minimap,
+            size: "fit",
+          },
           scrollBeyondLastLine: false,
           fontSize: settings.fontSize,
           fontFamily: settings.fontFamily,

@@ -6,11 +6,10 @@ import {
   IconCode,
   IconFilePlus,
   IconClipboardCheck,
-  IconBriefcase,
   IconUser,
+  IconSettings,
   IconBook,
   IconLifebuoy,
-  IconSettings,
 } from "@tabler/icons-react";
 import classes from "../Style/NavbarMinimal.module.css";
 
@@ -107,16 +106,25 @@ const mockdata = [
 
 export function NavbarMinimal() {
   const location = useLocation();
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(null);
 
   useEffect(() => {
     const currentPath = location.pathname;
-    const activeIndex = mockdata.findIndex(
-      (link) => link.linkClicked === currentPath
-    );
-    if (activeIndex !== -1) {
-      setActive(activeIndex);
-    }
+    // Debug logs
+    console.log("Current path:", currentPath);
+
+    const activeIndex = mockdata.findIndex((link) => {
+      // Match the link if the current path starts with the link's path
+      const isActive =
+        currentPath === link.linkClicked ||
+        currentPath.startsWith(link.linkClicked + "/");
+      console.log(`Matching ${link.linkClicked}: ${isActive}`);
+      return isActive;
+    });
+
+    // Debug log for active index
+    console.log("Active index:", activeIndex);
+    setActive(activeIndex);
   }, [location.pathname]);
 
   const links = mockdata.map((link, index) => (

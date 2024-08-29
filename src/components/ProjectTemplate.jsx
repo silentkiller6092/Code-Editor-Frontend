@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Input, CloseButton, Button } from "@mantine/core";
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   IconWorldWww,
   IconBrandCodesandbox,
@@ -13,7 +13,6 @@ import {
   IconBrandSass,
   IconSearch,
 } from "@tabler/icons-react";
-import PrivateCodeEditor from "./PrivateCodeEditorSection";
 
 function ProjectTemplate() {
   const [value, setValue] = useState("");
@@ -159,7 +158,7 @@ function ProjectTemplate() {
                       {getFileIcon(file)}
 
                       <div className="flex-1 flex justify-between items-center">
-                        <Link to={"/template/1/htmlcss"}>
+                        <Link to={"/workspace/1/htmlcss"}>
                           <span>{file.name}</span>
                         </Link>
                         <div className="text-right">
