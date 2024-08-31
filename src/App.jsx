@@ -12,6 +12,7 @@ import GlobeDemo from "./components/Home";
 import WorkSpace from "./components/WorkSpace";
 import PrivateCodeEditor from "./components/PrivateCodeEditorSection";
 import EditorSettings from "./components/EditorSetting";
+import HomeGlobe from "./components/HomeGlobe";
 
 function App() {
   const [opened, { toggle }] = useDisclosure();

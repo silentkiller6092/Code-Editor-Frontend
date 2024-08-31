@@ -5,3 +5,9 @@
   flex-wrap: nowrap;
   overflow-x: scroll;
 }
+.homeTitle {
+  font-family: "Comfortaa Variable", system-ui;
+}
+.homedefination {
+  font-family: "Quicksand Variable", sans-serif;
+}

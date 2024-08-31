@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Tabs, Button } from "@mantine/core";
-import Buttons from "./Buttons";
+import { Tabs, Button, TextInput, Tooltip } from "@mantine/core";
+
 import {
   IconBrandJavascript,
   IconHtml,
@@ -9,6 +9,8 @@ import {
   IconBrandGolang,
   IconBrandSass,
   IconDeviceFloppy,
+  IconPhoto,
+  IconArrowRight,
   IconCoffee,
   IconExternalLink,
   IconFileText,
@@ -48,6 +50,8 @@ function PrivateCodeEditorSection() {
   const [cssCode, setCssCode] = useState(initialFiles[1].content);
   const [jsCode, setJsCode] = useState(initialFiles[2].content);
   const [showSpinner, setShowSpinner] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [projectName, setProjectName] = useState("");
   const handleEditorChange = (index, newValue) => {
     const updatedFiles = [...files];
     updatedFiles[index].content = newValue;
@@ -104,10 +108,14 @@ function PrivateCodeEditorSection() {
   };
 
   const openSpinner = () => {
+    if (projectName.length == 0) {
+      alert("Project Name Requrie");
+      return;
+    }
     setShowSpinner(true);
     setTimeout(() => {
       setShowSpinner(false);
-    }, 10000); // Spinner will turn off after 10 seconds
+    }, 5000); // Spinner will turn off after 10 seconds
   };
   const handleOpenNewWindow = () => {
     const outputWindow = window.open();
@@ -141,7 +149,6 @@ function PrivateCodeEditorSection() {
               ></Tabs.Tab>
               <Tabs.Tab
                 value="save"
-                onClick={openSpinner}
                 leftSection={<IconDeviceFloppy color="rgb(191 219 254)" />}
               ></Tabs.Tab>
             </div>
@@ -149,7 +156,11 @@ function PrivateCodeEditorSection() {
         </div>
 
         {files.map((file, index) => (
-          <Tabs.Panel key={file.name} value={file.name} className="mr-10">
+          <Tabs.Panel
+            key={file.name}
+            value={file.name}
+            className="md:mx-0 mx-5"
+          >
             <PrivateEditor
               code={file.content}
               language={getLanguageFromExtension(file.name)}
@@ -175,6 +186,34 @@ function PrivateCodeEditorSection() {
           </div>
         </Tabs.Panel>
         <Tabs.Panel value="save">
+          <div className="flex justify-center flex-col mt-28   items-center ">
+            <TextInput
+              placeholder="Enter Your Project Name"
+              size="md"
+              mb={20}
+              mt={20}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              onChange={(e) => setProjectName(e.target.value)}
+              inputContainer={(children) => (
+                <Tooltip
+                  label="Additional information"
+                  position="top-start"
+                  opened={focused}
+                >
+                  {children}
+                </Tooltip>
+              )}
+            />
+            <Button
+              variant="light"
+              leftSection={<IconPhoto size={14} />}
+              onClick={openSpinner}
+              rightSection={<IconArrowRight size={14} />}
+            >
+              Save
+            </Button>
+          </div>
           {showSpinner ? <Spinner /> : <div>Content Saved</div>}
         </Tabs.Panel>
       </Tabs>
