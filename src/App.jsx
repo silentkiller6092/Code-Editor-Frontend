@@ -12,7 +12,6 @@ import GlobeDemo from "./components/Home";
 import WorkSpace from "./components/WorkSpace";
 import PrivateCodeEditor from "./components/PrivateCodeEditorSection";
 import EditorSettings from "./components/EditorSetting";
-import HomeGlobe from "./components/HomeGlobe";
 
 function App() {
   const [opened, { toggle }] = useDisclosure();
@@ -29,7 +28,7 @@ function App() {
           }}
         >
           <AppShell.Header>
-            <Flex justify="space-between" align="center" direction="row" mt={3}>
+            <Flex justify="space-between" align="center" direction="row">
               <Flex align="center">
                 <Burger
                   opened={opened}

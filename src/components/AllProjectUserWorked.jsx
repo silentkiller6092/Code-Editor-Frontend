@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Input, CloseButton } from "@mantine/core";
+import { Link } from "react-router-dom";
 import {
   IconFolderOpen,
   IconFileText,
@@ -146,7 +147,9 @@ function AllProjectUserWorked() {
                     >
                       {getFileIcon(file)}
                       <div className="flex-1 flex justify-between items-center">
-                        <span>{file.name}</span>
+                        <Link to={"/workspace/1/htmlcss"}>
+                          <span>{file.name}</span>
+                        </Link>
                         <div className="text-right">
                           <div className="flex">
                             <span className="block mr-6">

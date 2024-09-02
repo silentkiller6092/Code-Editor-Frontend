@@ -124,7 +124,7 @@ function PrivateCodeEditorSection() {
   };
 
   return (
-    <div className="">
+    <div className="sticky h-16">
       <Tabs defaultValue={files[0]?.name || ""}>
         <div className="flex">
           <Tabs.List className="flex w-full removeFLex">
@@ -159,7 +159,7 @@ function PrivateCodeEditorSection() {
           <Tabs.Panel
             key={file.name}
             value={file.name}
-            className="md:mx-0 mx-5"
+            className="md:mx-0 mx-5 "
           >
             <PrivateEditor
               code={file.content}

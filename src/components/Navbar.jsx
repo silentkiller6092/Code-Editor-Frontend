@@ -9,7 +9,7 @@ import {
   IconUser,
   IconSettings,
   IconBook,
-  IconLifebuoy,
+  IconLogin,
 } from "@tabler/icons-react";
 import classes from "../Style/NavbarMinimal.module.css";
 
@@ -96,8 +96,8 @@ const mockdata = [
     linkClicked: "/user-guide",
   },
   {
-    icon: IconLifebuoy,
-    label: "Help & Docs",
+    icon: IconLogin,
+    label: "Login",
     color: "rgb(255 69 0)", // Red-Orange
     glowColor: "#ff4500", // Orange Red Glow
     linkClicked: "/help-docs",

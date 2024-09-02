@@ -14,7 +14,7 @@ const PrivateEditor = ({ code, onChange, language }) => {
   }, [settings]);
 
   return (
-    <div style={{ height: "90vh", width: "100%", position: "relative" }}>
+    <div className="h-screen w-full relative">
       <MonacoEditor
         theme={settings.theme}
         language={language}
