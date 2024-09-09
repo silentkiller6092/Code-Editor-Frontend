@@ -124,7 +124,7 @@ function PrivateCodeEditorSection() {
   };
 
   return (
-    <div className="sticky h-16">
+    <div className="sticky h-16 bg-[rgba(30,30,30,255)]">
       <Tabs defaultValue={files[0]?.name || ""}>
         <div className="flex">
           <Tabs.List className="flex w-full removeFLex">

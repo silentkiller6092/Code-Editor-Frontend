@@ -1,6 +1,6 @@
 import MonacoEditor from "@monaco-editor/react";
 import React, { useState, useRef, useEffect } from "react";
-
+import { useSelector } from "react-redux";
 const CodeEditor = ({
   code,
   onChange,
@@ -10,6 +10,7 @@ const CodeEditor = ({
   isFocused,
   onShiftEnter,
 }) => {
+  const settings = useSelector((state) => state.editorSettings);
   const editorRef = useRef(null);
 
   useEffect(() => {
@@ -52,6 +53,9 @@ const CodeEditor = ({
         fontFamily: "cursive",
         border: isFocused ? "1px solid #A9A9A9" : "none",
         transition: "border 0.3s ease",
+        display: "flex", // Add Flexbox
+        justifyContent: "center", // Center horizontally
+        alignItems: "center", // Center vertically
       }}
       className="code-editor"
     >
@@ -59,18 +63,24 @@ const CodeEditor = ({
         language={language}
         value={code}
         onChange={handleEditorChange}
-        theme={theme}
+        theme={settings.theme}
         options={{
           automaticLayout: true,
-          lineNumbers: "on",
-          minimap: { enabled: false },
+          lineNumbers: settings.lineNumbers,
+          minimap: {
+            enabled: settings.minimap,
+            size: "fit",
+          },
           scrollBeyondLastLine: false,
-          readOnly: false,
-          fontSize: 14,
-          lineHeight: 22,
-          wordWrap: "on",
+          fontSize: settings.fontSize,
+          fontFamily: settings.fontFamily,
+          wordWrap: settings.wordWrap,
           tabSize: 2,
-          insertSpaces: true,
+          lineHeight: settings.lineHeight,
+
+          renderLineHighlight: settings.errorMarking ? "all" : "none",
+          renderWhitespace: "all",
+          colorDecorators: true,
         }}
         onMount={(editor, monaco) => {
           editorRef.current = editor;

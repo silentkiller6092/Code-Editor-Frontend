@@ -5,6 +5,7 @@ export default {
     extend: {
       animation: {
         "meteor-effect": "meteor 5s linear infinite",
+        move: "move 5s linear infinite",
       },
       keyframes: {
         meteor: {
@@ -14,6 +15,10 @@ export default {
             transform: "rotate(215deg) translateX(-500px)",
             opacity: "0",
           },
+        },
+        move: {
+          "0%": { transform: "translateX(-200px)" },
+          "100%": { transform: "translateX(200px)" },
         },
       },
     },

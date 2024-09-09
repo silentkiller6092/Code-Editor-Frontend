@@ -25,7 +25,7 @@ const EditorSettings = () => {
     }, 3000);
   };
   return (
-    <div className="mt-2 w-[92%] ml-10">
+    <div className="mt-2 w-[92%] ml-10 bg-black">
       <div className="flex flex-col justify-start w-full p-5 hover:outline-none hover:bg-[#1c1c1c9e] hover:rounded-md">
         <span>
           {" "}
@@ -59,6 +59,21 @@ const EditorSettings = () => {
           onChange={(value) => dispatch(setFontSize(value))}
           min={10}
           max={24}
+        />
+      </div>
+
+      <div className="flex flex-col justify-start w-full p-5 hover:outline-none hover:bg-[#1c1c1c9e] hover:rounded-md">
+        <span>
+          {" "}
+          <span className="text-gray-400">Editor: </span> Line Height
+        </span>
+        <span className="text-gray-400 text-sm">
+          Line height Controls the font size in pixels.
+        </span>
+        <NumberInput
+          className="w-56"
+          value={settings.lineHeight}
+          onChange={(value) => dispatch(setFontSize(value))}
         />
       </div>
       <div className="flex flex-col justify-start w-full p-5 hover:outline-none hover:bg-[#1c1c1c9e] hover:rounded-md">

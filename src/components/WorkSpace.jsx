@@ -9,7 +9,7 @@ import ProjectTemplate from "./ProjectTemplate";
 
 function WorkSpace() {
   return (
-    <div className="container relative z-10 lg:px-5 mx-auto mt-3 px-2  grid sm:grid-cols-2 grid-cols-1 md:gap-10">
+    <div className="container bg-black relative z-10 lg:px-5 mx-auto mt-3 px-2  grid sm:grid-cols-2 grid-cols-1 md:gap-10">
       <div className="h-full py-4 px-2 sm:w-full">
         <FolderStrcuture />
       </div>

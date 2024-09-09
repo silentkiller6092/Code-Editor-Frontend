@@ -9,6 +9,7 @@ const initialState = {
   wordWrap: "off",
   errorMarking: false,
   highContrast: false,
+  lineHeight: 22,
 };
 
 const editorSettingsSlice = createSlice({

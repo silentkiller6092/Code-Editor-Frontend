@@ -4,12 +4,14 @@ import { Select } from "@mantine/core";
 import { IconDeviceFloppy, IconPlayerPlay } from "@tabler/icons-react";
 import Buttons from "./Buttons";
 import Output from "./Output";
+import "@fontsource/ibm-plex-sans";
 
 function LanguageOptions() {
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [language, setLanguage] = useState("javascript");
+
   const editorRef = useRef(null);
 
   const handleCodeChange = (newCode) => {
@@ -17,14 +19,15 @@ function LanguageOptions() {
   };
 
   const executeCode = async () => {
-    const url = `/api/${language}`;
+    const url = `/api/v1/execute/${language}`;
+
     try {
       let response = await fetch(url, {
         method: "POST",
         body: code,
       });
-      let data = await response.text();
-      data = data.replace(/["']/g, "");
+      let data = await response.json();
+      data = data && data["response"].replace(/["']/g, "");
 
       setResult(data);
     } catch (e) {
@@ -132,7 +135,7 @@ function LanguageOptions() {
         </div>
 
         <div className="md:w-2/5 w-full border-t-2 md:border-none">
-          <h2 className="md:hidden text-center">Output</h2>
+          <h2 className="md:hidden text-center homeTitle">Output</h2>
           <Output result={result} />
         </div>
       </div>

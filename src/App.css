@@ -1,12 +1,15 @@
 .fontChange {
   font-family: "Roboto", sans-serif;
 }
+body {
+  background-color: black;
+}
 .removeFLex {
   flex-wrap: nowrap;
   overflow-x: scroll;
 }
 .homeTitle {
-  font-family: "Comfortaa Variable", system-ui;
+  font-family: "IBM Plex Sans", sans-serif;
 }
 .homedefination {
   font-family: "Quicksand Variable", sans-serif;

@@ -172,7 +172,7 @@ function UseExistingProject() {
   };
 
   return (
-    <div className="bg-[#1e1c1cdb] px-4 mx-2 text-center shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-sm relative min-h-96  h-96  overflow-scroll">
+    <div className="bg-[#1e1c1cdb] px-4 mx-2 text-center shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] rounded-sm relative min-h-96  h-96  overflow-scroll">
       <h1
         className="title-font sm:text-2xl text-[18px]  mb-3 pt-3 fontChange"
         style={{ borderBottom: "0.1px solid #C0C0C0" }}

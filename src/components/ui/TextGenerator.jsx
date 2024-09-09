@@ -72,7 +72,7 @@ export const TextGenerateEffect = ({
   return (
     <div className={cn(className)}>
       <div className="mt-4">
-        <div className="text-left bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent text-[20px] sm:text-xl md:text-xl text-gray-400 mt-10 md:mt3  homedefination leading-snug tracking-wide">
+        <div className="text-left bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent md:text-[20px] text-[16px] sm:text-xl md:text-xl text-gray-400 mt-10 md:mt3  homedefination leading-snug tracking-wide">
           {renderWords()}
         </div>
       </div>

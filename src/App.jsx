@@ -1,6 +1,6 @@
-import { AppShell, Burger, Group, MantineProvider } from "@mantine/core";
+import { AppShell, Burger, MantineProvider } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Flex, Text } from "@mantine/core";
 import { IconBrandVscode } from "@tabler/icons-react";
 import "@mantine/core/styles.css";
@@ -8,10 +8,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LanguageOptions from "./components/LanguageOptions";
 import { NavbarMinimal } from "./components/Navbar";
 import GlobeDemo from "./components/Home";
-
 import WorkSpace from "./components/WorkSpace";
 import PrivateCodeEditor from "./components/PrivateCodeEditorSection";
 import EditorSettings from "./components/EditorSetting";
+import { AuthenticationForm } from "./components/Authenticationform";
+import UserProfile from "./components/Profile";
 
 function App() {
   const [opened, { toggle }] = useDisclosure();
@@ -67,10 +68,12 @@ function App() {
               <Route path="/code-editor" element={<LanguageOptions />} />
               <Route path="/workspace" element={<WorkSpace />} />
               <Route path="/settings" element={<EditorSettings />} />
+              <Route path="/account" element={<UserProfile />} />
               <Route
                 path="/workspace/:id/:type"
                 element={<PrivateCodeEditor />}
               />
+              <Route path="/auth" element={<AuthenticationForm />} />
             </Routes>
           </AppShell.Main>
         </AppShell>
