@@ -12,6 +12,89 @@ const CodeEditor = ({
 }) => {
   const settings = useSelector((state) => state.editorSettings);
   const editorRef = useRef(null);
+  const defaultTheme = {
+    base: "vs-dark",
+    inherit: true,
+    rules: [
+      {
+        background: "1c1f25",
+        token: "",
+      },
+      {
+        foreground: "6a9955",
+        background: "1c1f25",
+        fontStyle: "italic",
+        token: "comment.block",
+      },
+      {
+        foreground: "ce9178",
+        token: "string",
+      },
+      {
+        foreground: "569cd6",
+        token: "constant.language",
+      },
+      {
+        foreground: "b5cea8",
+        token: "constant.numeric",
+      },
+      {
+        foreground: "dcdcaa",
+        token: "keyword",
+      },
+      {
+        foreground: "9cdcfe",
+        token: "keyword.operator",
+      },
+      {
+        foreground: "d7ba7d",
+        token: "keyword.other.directive",
+      },
+      {
+        foreground: "4ec9b0",
+        token: "keyword.control",
+      },
+      {
+        foreground: "c586c0",
+        token: "entity.name.type.variant",
+      },
+      {
+        foreground: "d4d4d4",
+        token: "entity.name.function",
+      },
+      {
+        foreground: "e6c07b",
+        token: "variable.parameter",
+      },
+      {
+        foreground: "d19a66",
+        token: "entity.name.tag",
+      },
+      {
+        foreground: "ff0000",
+        background: "1c1f25",
+        fontStyle: "bold",
+        token: "invalid.illegal",
+      },
+      {
+        foreground: "ff6f6f",
+        background: "1c1f25",
+        token: "invalid.deprecated",
+      },
+      {
+        foreground: "9cdcfe",
+        token: "punctuation",
+      },
+    ],
+    colors: {
+      "editor.foreground": "#D0D0FF",
+      "editor.background": "#1c1f25",
+      "editor.selectionBackground": "#0a0a0b5f",
+      "editor.lineHighlightBackground": "#0a0a0b5f",
+      "editorCursor.foreground": "#7070FF",
+      "editorWhitespace.foreground": "#BFBFBF",
+    },
+  };
 
   useEffect(() => {
     const handleKeydown = (event) => {
@@ -45,15 +128,17 @@ const CodeEditor = ({
       onEditorMount(false);
     }
   };
-
-  // Move theme definition outside of onMount using beforeMount
   const handleBeforeMount = (monaco) => {
-    if (
-      settings.theme.name !== "vs-dark" &&
-      settings.theme.name !== "vs-light" &&
-      settings.theme.name !== "hc-black"
-    ) {
-      monaco.editor.defineTheme("default", settings.theme);
+    if (settings.themeChanged) {
+      if (
+        settings.theme.name !== "vs-dark" &&
+        settings.theme.name !== "vs-light" &&
+        settings.theme.name !== "hc-black"
+      ) {
+        monaco.editor.defineTheme("default", settings.theme);
+      }
+    } else {
+      monaco.editor.defineTheme("home", defaultTheme);
     }
   };
 
@@ -61,17 +146,19 @@ const CodeEditor = ({
     editorRef.current = editor;
     editor.onDidFocusEditorText(handleEditorFocus);
     editor.onDidBlurEditorText(handleEditorBlur);
-
-    if (
-      settings.theme.name === "vs-dark" ||
-      settings.theme.name === "vs-light" ||
-      settings.theme.name === "hc-black"
-    ) {
-      // Directly set Monaco's built-in theme
-      monaco.editor.setTheme(settings.theme.name);
+    if (settings.themeChanged) {
+      if (
+        settings.theme.name === "vs-dark" ||
+        settings.theme.name === "vs-light" ||
+        settings.theme.name === "hc-black"
+      ) {
+        monaco.editor.setTheme(settings.theme.name);
+      } else {
+        // Use the custom defined theme
+        monaco.editor.setTheme("default");
+      }
     } else {
-      // Use the custom defined theme
-      monaco.editor.setTheme("default");
+      monaco.editor.setTheme("home");
     }
   };
 
@@ -91,7 +178,7 @@ const CodeEditor = ({
       <MonacoEditor
         language={language}
         value={code}
-        beforeMount={handleBeforeMount} // Define the theme before the editor mounts
+        beforeMount={handleBeforeMount}
         onChange={handleEditorChange}
         options={{
           automaticLayout: true,

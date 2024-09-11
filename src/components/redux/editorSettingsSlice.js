@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 const editorSettingsSlice = createSlice({
   name: "editorSettings",
   initialState: {
-    theme: "vs-dark",
+    theme: { name: "vs-dark" },
+    themeChanged: false, // New flag to track theme changes
     fontSize: 14,
     fontFamily: "monospace",
     lineNumbers: "on",
@@ -14,10 +14,17 @@ const editorSettingsSlice = createSlice({
   },
   reducers: {
     setTheme: (state, action) => {
-      state.theme = action.payload; // Update theme with name, rules, and colors
+      state.theme = action.payload;
+      state.themeChanged = true; // Set themeChanged to true on theme change
+    },
+    resetThemeChanged: (state) => {
+      state.themeChanged = false; // Reset when necessary
     },
     setFontSize: (state, action) => {
       state.fontSize = action.payload;
+    },
+    setlineHeight: (state, action) => {
+      state.lineHeight = action.payload;
     },
     setFontFamily: (state, action) => {
       state.fontFamily = action.payload;
@@ -31,6 +38,7 @@ const editorSettingsSlice = createSlice({
     setWordWrap: (state, action) => {
       state.wordWrap = action.payload;
     },
+
     setErrorMarking: (state, action) => {
       state.errorMarking = action.payload;
     },
@@ -39,11 +47,13 @@ const editorSettingsSlice = createSlice({
 
 export const {
   setTheme,
+  resetThemeChanged,
   setFontSize,
   setFontFamily,
   setLineNumbers,
   setMinimap,
   setWordWrap,
+  setlineHeight,
   setErrorMarking,
 } = editorSettingsSlice.actions;
 export default editorSettingsSlice.reducer;

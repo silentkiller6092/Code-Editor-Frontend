@@ -8,8 +8,10 @@ import {
   setFontFamily,
   setLineNumbers,
   setMinimap,
+  setlineHeight,
   setWordWrap,
   setErrorMarking,
+  resetThemeChanged,
 } from "../components/redux/editorSettingsSlice";
 
 const EditorSettings = () => {
@@ -18,6 +20,7 @@ const EditorSettings = () => {
   const settings = useSelector((state) => state.editorSettings);
 
   const handleThemeChange = async (value) => {
+    dispatch(resetThemeChanged(true));
     if (value === "vs-dark" || value === "vs-light" || value === "hc-black") {
       dispatch(setTheme({ name: value, rules: [], colors: {} }));
     } else {
@@ -37,9 +40,18 @@ const EditorSettings = () => {
       setSave(false);
     }, 3000);
   };
+  const optionsFilter = ({ options, search }) => {
+    const splittedSearch = search.toLowerCase().trim().split(" ");
+    return options.filter((option) => {
+      const words = option.label.toLowerCase().trim().split(" ");
+      return splittedSearch.every((searchWord) =>
+        words.some((word) => word.includes(searchWord))
+      );
+    });
+  };
 
   return (
-    <div className="mt-2 w-[92%] ml-10 bg-black">
+    <div className="mt-2 w-[92%] ml-10">
       <div className="flex flex-col justify-start w-full p-5 hover:outline-none hover:bg-[#1c1c1c9e] hover:rounded-md">
         <span>
           <span className="text-gray-400">Editor: </span> Theme
@@ -49,15 +61,86 @@ const EditorSettings = () => {
         </span>
         <Select
           className="w-56"
+          placeholder="Select Theme"
           value={settings.theme.name} // Display selected theme name
           onChange={handleThemeChange} // Fetch theme JSON when changed
+          withScrollArea={false}
           data={[
             { value: "vs-dark", label: "Dark" },
             { value: "vs-light", label: "Light" },
             { value: "hc-black", label: "High Contrast" },
-            { value: "Dawn", label: "Dawn" },
+            { value: "Active4D", label: "Active4D" },
+            { value: "All Hallows Eve", label: "All Hallows Eve" },
             { value: "Amy", label: "Amy" },
+            { value: "Birds of Paradise", label: "Birds of Paradise" },
+            { value: "Blackboard", label: "Blackboard" },
+            { value: "Brilliance Black", label: "Brilliance Black" },
+            { value: "Brilliance Dull", label: "Brilliance Dull" },
+            { value: "Chrome DevTools", label: "Chrome DevTools" },
+            { value: "Clouds", label: "Clouds" },
+            { value: "Clouds Midnight", label: "Clouds Midnight" },
+            { value: "Cobalt", label: "Cobalt" },
+            { value: "Cobalt2", label: "Cobalt2" },
+            { value: "Dawn", label: "Dawn" },
+            { value: "Dominion Day", label: "Dominion Day" },
+            { value: "Dracula", label: "Dracula" },
+            { value: "Dreamweaver", label: "Dreamweaver" },
+            { value: "Eiffel", label: "Eiffel" },
+            { value: "Espresso Libre", label: "Espresso Libre" },
+            { value: "GitHub", label: "GitHub" },
+            { value: "GitHub Dark", label: "GitHub Dark" },
+            { value: "GitHub Light", label: "GitHub Light" },
+            { value: "IDLE", label: "IDLE" },
+            { value: "iPlastic", label: "iPlastic" },
+            { value: "idleFingers", label: "idleFingers" },
+            { value: "Katzenmilch", label: "Katzenmilch" },
+            { value: "krTheme", label: "krTheme" },
+            { value: "Kuroir Theme", label: "Kuroir Theme" },
+            { value: "LAZY", label: "LAZY" },
+            { value: "MagicWB (Amiga)", label: "MagicWB (Amiga)" },
+            { value: "Merbivore", label: "Merbivore" },
+            { value: "Merbivore Soft", label: "Merbivore Soft" },
+            { value: "Monokai", label: "Monokai" },
+            { value: "Monokai Bright", label: "Monokai Bright" },
+            { value: "monoindustrial", label: "monoindustrial" },
+            { value: "Night Owl", label: "Night Owl" },
+            { value: "Nord", label: "Nord" },
+            { value: "Oceanic Next", label: "Oceanic Next" },
+            { value: "Pastels on Dark", label: "Pastels on Dark" },
+            { value: "Slush and Poppies", label: "Slush and Poppies" },
+            { value: "Solarized-dark", label: "Solarized-dark" },
+            { value: "Solarized-light", label: "Solarized-light" },
+            { value: "SpaceCadet", label: "SpaceCadet" },
+            { value: "Sunburst", label: "Sunburst" },
+            {
+              value: "Textmate (Mac Classic)",
+              label: "Textmate (Mac Classic)",
+            },
+            { value: "themelist", label: "themelist" },
+            { value: "Tomorrow", label: "Tomorrow" },
+            { value: "Tomorrow-Night", label: "Tomorrow-Night" },
+            { value: "Tomorrow-Night-Blue", label: "Tomorrow-Night-Blue" },
+            { value: "Tomorrow-Night-Bright", label: "Tomorrow-Night-Bright" },
+            {
+              value: "Tomorrow-Night-Eighties",
+              label: "Tomorrow-Night-Eighties",
+            },
+            { value: "Twilight", label: "Twilight" },
+            { value: "Upstream Sunburst", label: "Upstream Sunburst" },
+            { value: "Vibrant Ink", label: "Vibrant Ink" },
+            { value: "Xcode_default", label: "Xcode_default" },
+            { value: "Zenburnesque", label: "Zenburnesque" },
           ]}
+          filter={optionsFilter}
+          searchable
+          styles={{
+            dropdown: {
+              maxHeight: 230,
+              overflowY: "auto",
+              background: "#1c1f25",
+            },
+          }}
+          mt="md"
         />
       </div>
       <div className="flex flex-col justify-start w-full p-5 hover:outline-none hover:bg-[#1c1c1c9e] hover:rounded-md">
@@ -88,7 +171,7 @@ const EditorSettings = () => {
         <NumberInput
           className="w-56"
           value={settings.lineHeight}
-          onChange={(value) => dispatch(setFontSize(value))}
+          onChange={(value) => dispatch(setlineHeight(value))}
         />
       </div>
       <div className="flex flex-col justify-start w-full p-5 hover:outline-none hover:bg-[#1c1c1c9e] hover:rounded-md">

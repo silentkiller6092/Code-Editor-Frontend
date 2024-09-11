@@ -52,7 +52,7 @@ function LanguageOptions() {
   return (
     <div>
       <div
-        className="bg-[rgba(30,30,30,255)] mt-0"
+        className="bg-[#1c1f25] mt-0"
         style={{ borderBottom: "0.1px solid #C0C0C0" }}
       >
         <div className="flex justify-between items-center">
@@ -64,16 +64,16 @@ function LanguageOptions() {
               dropdown: {
                 maxHeight: 200,
                 overflowY: "auto",
-                backgroundColor: "rgba(30,30,30,255)",
+                backgroundColor: "#1c1f25",
                 color: "#c0cee7",
               },
               input: {
-                backgroundColor: "rgba(30,30,30,255)",
+                backgroundColor: "#1c1f25",
                 border: "none",
                 color: "#c0cee7",
               },
               item: {
-                backgroundColor: "rgba(30,30,30,255)",
+                backgroundColor: "#1c1f25",
                 "&[data-hovered]": {
                   backgroundColor: "rgba(50,50,50,255)",
                 },

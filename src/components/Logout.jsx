@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { logout } from "./redux/AuthSlice";
+import { resetThemeChanged } from "./redux/editorSettingsSlice";
 import { clearPersistedStorage } from "./redux";
 
 function Logout() {
@@ -18,6 +19,7 @@ function Logout() {
       const data = await response.json();
       if (data.status === "Success") {
         await clearPersistedStorage();
+        dispatch(resetThemeChanged());
         dispatch(logout());
 
         navigate("/");

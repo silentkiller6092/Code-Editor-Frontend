@@ -32,7 +32,7 @@ function Output({ result }) {
       <Paper
         onClick={() => setFocus(true)}
         shadow="md"
-        style={{ height: "90vh", background: "rgba(30,30,30,255)" }}
+        style={{ height: "90vh", background: "#1c1f25" }}
       >
         <Text color="white" fontSize="2xl" fontWeight="bold">
           {result}
