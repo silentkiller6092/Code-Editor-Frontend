@@ -1,44 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  theme: "vs-dark",
-  fontSize: 14,
-  fontFamily: "monospace",
-  lineNumbers: "on",
-  minimap: true,
-  wordWrap: "off",
-  errorMarking: false,
-  highContrast: false,
-  lineHeight: 22,
-};
-
 const editorSettingsSlice = createSlice({
   name: "editorSettings",
-  initialState,
+  initialState: {
+    theme: "vs-dark",
+    fontSize: 14,
+    fontFamily: "monospace",
+    lineNumbers: "on",
+    minimap: true,
+    wordWrap: "off",
+    errorMarking: true,
+    lineHeight: 18,
+  },
   reducers: {
-    setTheme(state, action) {
-      state.theme = action.payload;
+    setTheme: (state, action) => {
+      state.theme = action.payload; // Update theme with name, rules, and colors
     },
-    setFontSize(state, action) {
+    setFontSize: (state, action) => {
       state.fontSize = action.payload;
     },
-    setFontFamily(state, action) {
+    setFontFamily: (state, action) => {
       state.fontFamily = action.payload;
     },
-    setLineNumbers(state, action) {
+    setLineNumbers: (state, action) => {
       state.lineNumbers = action.payload;
     },
-    setMinimap(state, action) {
+    setMinimap: (state, action) => {
       state.minimap = action.payload;
     },
-    setWordWrap(state, action) {
+    setWordWrap: (state, action) => {
       state.wordWrap = action.payload;
     },
-    setErrorMarking(state, action) {
+    setErrorMarking: (state, action) => {
       state.errorMarking = action.payload;
-    },
-    setHighContrast(state, action) {
-      state.highContrast = action.payload;
     },
   },
 });
@@ -51,7 +45,5 @@ export const {
   setMinimap,
   setWordWrap,
   setErrorMarking,
-  setHighContrast,
 } = editorSettingsSlice.actions;
-
 export default editorSettingsSlice.reducer;

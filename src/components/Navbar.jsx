@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { Tooltip, UnstyledButton, Stack, ScrollArea } from "@mantine/core";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   IconHome2,
   IconCode,
   IconFilePlus,
-  IconClipboardCheck,
   IconUser,
   IconSettings,
   IconBook,
+  IconClipboardCheck,
+  IconLogout,
   IconLogin,
 } from "@tabler/icons-react";
 import classes from "../Style/NavbarMinimal.module.css";
@@ -75,18 +77,25 @@ const mockdata = [
     linkClicked: "/account",
   },
   {
-    icon: IconClipboardCheck,
-    label: "Task Manager",
-    color: "rgb(147 51 234)", // Purple
-    glowColor: "#da70d6", // Orchid Glow
-    linkClicked: "/task-manager",
-  },
-  {
     icon: IconSettings,
     label: "Settings",
     color: "rgb(52 211 153)", // Mint Green
     glowColor: "#ff6347", // Tomato Glow
     linkClicked: "/settings",
+  },
+  {
+    icon: IconLogout,
+    label: "Logout",
+    color: "rgb(255 69 0)", // Red-Orange
+    glowColor: "#ff4800", // Orange Red Glow
+    linkClicked: "/logout",
+  },
+  {
+    icon: IconClipboardCheck,
+    label: "Task Manager",
+    color: "rgb(147 51 234)", // Purple
+    glowColor: "#da70d6", // Orchid Glow
+    linkClicked: "/task-manager",
   },
   {
     icon: IconBook,
@@ -100,41 +109,47 @@ const mockdata = [
     label: "Login",
     color: "rgb(255 69 0)", // Red-Orange
     glowColor: "#ff4500", // Orange Red Glow
-    linkClicked: "/help-docs",
+    linkClicked: "/auth",
   },
 ];
 
 export function NavbarMinimal() {
   const location = useLocation();
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const [active, setActive] = useState(null);
 
   useEffect(() => {
     const currentPath = location.pathname;
-    // Debug logs
-    console.log("Current path:", currentPath);
 
     const activeIndex = mockdata.findIndex((link) => {
-      // Match the link if the current path starts with the link's path
       const isActive =
         currentPath === link.linkClicked ||
         currentPath.startsWith(link.linkClicked + "/");
-      console.log(`Matching ${link.linkClicked}: ${isActive}`);
       return isActive;
     });
-
-    // Debug log for active index
-    console.log("Active index:", activeIndex);
     setActive(activeIndex);
   }, [location.pathname]);
 
-  const links = mockdata.map((link, index) => (
-    <NavbarLink
-      {...link}
-      key={link.label}
-      active={index === active}
-      onClick={() => setActive(index)}
-    />
-  ));
+  const links = mockdata
+    .filter((link) => {
+      if (!isLoggedIn) {
+        return (
+          link.label === "Home" ||
+          link.label === "Code Editor" ||
+          link.label === "Login"
+        );
+      } else {
+        return link.label !== "Login";
+      }
+    })
+    .map((link, index) => (
+      <NavbarLink
+        {...link}
+        key={link.label}
+        active={index === active}
+        onClick={() => setActive(index)}
+      />
+    ));
 
   return (
     <div className="pb-28">

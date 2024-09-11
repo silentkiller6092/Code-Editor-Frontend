@@ -1,25 +1,51 @@
 import React, { useEffect } from "react";
-import Cookies from "js-cookie";
 import { Featured } from "./Featured";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "./redux/AuthSlice";
-export default function GlobeDemo() {
+import { login, logout } from "./redux/AuthSlice"; // Import login action
+
+export default function Home() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const validateAccessToekn = async () => {
-      const accessToken = Cookies.get("accessToken");
+    const validateAccessToken = async () => {
       try {
+        // Attempt to validate the access token
         const response = await fetch("/api/v1/user/profile", {
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          credentials: "include",
         });
-        if (response.status == 403) {
-        }
         const data = await response.json();
 
-        if (data.status == "Success") {
+        if (data.status === 403) {
+          // If access token is invalid, attempt to refresh it
+          const refreshResponse = await fetch(
+            "/api/v1/user/refreshAccessToken",
+            {
+              method: "POST",
+              credentials: "include", // Include credentials to ensure cookies are sent
+            }
+          );
+          const refreshData = await refreshResponse.json();
+
+          if (refreshData.status === "Error") {
+            // If refresh fails, log the user out
+            dispatch(logout());
+            navigate("/");
+          }
+
+          if (refreshData.status === "Success") {
+            // If refresh is successful, dispatch login with new user data
+            dispatch(
+              login({
+                full_name: refreshData.response.full_name,
+                email: refreshData.response.email,
+              })
+            );
+          }
+        } else if (data.status === "Success") {
+          // If access token is valid, dispatch login with existing user data
           dispatch(
             login({
               full_name: data.response.full_name,
@@ -27,10 +53,14 @@ export default function GlobeDemo() {
             })
           );
         }
-      } catch (err) {}
+      } catch (err) {
+        console.error("Error validating access token:", err);
+      }
     };
-    validateAccessToekn();
-  });
+
+    validateAccessToken();
+  }, [dispatch, navigate]);
+
   return (
     <div>
       <Featured />

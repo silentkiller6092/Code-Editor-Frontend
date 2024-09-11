@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Select, Switch, NumberInput, Button } from "@mantine/core";
 import { IconDeviceFloppy } from "@tabler/icons-react";
+import { Select, Switch, NumberInput } from "@mantine/core";
 import {
   setTheme,
   setFontSize,
@@ -15,33 +15,48 @@ import {
 const EditorSettings = () => {
   const [save, setSave] = useState(false);
   const dispatch = useDispatch();
-
   const settings = useSelector((state) => state.editorSettings);
+
+  const handleThemeChange = async (value) => {
+    if (value === "vs-dark" || value === "vs-light" || value === "hc-black") {
+      dispatch(setTheme({ name: value, rules: [], colors: {} }));
+    } else {
+      try {
+        const response = await fetch(`/themes/${value}.json`);
+        const theme = await response.json();
+        dispatch(setTheme(theme));
+      } catch (error) {
+        console.error("Error fetching theme:", error);
+      }
+    }
+  };
+
   const saveSetting = () => {
     setSave(true);
-
     setTimeout(() => {
       setSave(false);
     }, 3000);
   };
+
   return (
     <div className="mt-2 w-[92%] ml-10 bg-black">
       <div className="flex flex-col justify-start w-full p-5 hover:outline-none hover:bg-[#1c1c1c9e] hover:rounded-md">
         <span>
-          {" "}
           <span className="text-gray-400">Editor: </span> Theme
         </span>
         <span className="text-gray-400 text-sm">
-          Change the Theme of Editor as per Your need :
+          Change the Theme of Editor as per Your need:
         </span>
         <Select
           className="w-56"
-          value={settings.theme}
-          onChange={(value) => dispatch(setTheme(value))}
+          value={settings.theme.name} // Display selected theme name
+          onChange={handleThemeChange} // Fetch theme JSON when changed
           data={[
             { value: "vs-dark", label: "Dark" },
             { value: "vs-light", label: "Light" },
             { value: "hc-black", label: "High Contrast" },
+            { value: "Dawn", label: "Dawn" },
+            { value: "Amy", label: "Amy" },
           ]}
         />
       </div>

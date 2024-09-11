@@ -1,11 +1,11 @@
 import MonacoEditor from "@monaco-editor/react";
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
+
 const CodeEditor = ({
   code,
   onChange,
   language,
-  theme,
   onEditorMount,
   isFocused,
   onShiftEnter,
@@ -46,6 +46,35 @@ const CodeEditor = ({
     }
   };
 
+  // Move theme definition outside of onMount using beforeMount
+  const handleBeforeMount = (monaco) => {
+    if (
+      settings.theme.name !== "vs-dark" &&
+      settings.theme.name !== "vs-light" &&
+      settings.theme.name !== "hc-black"
+    ) {
+      monaco.editor.defineTheme("default", settings.theme);
+    }
+  };
+
+  const handleMount = (editor, monaco) => {
+    editorRef.current = editor;
+    editor.onDidFocusEditorText(handleEditorFocus);
+    editor.onDidBlurEditorText(handleEditorBlur);
+
+    if (
+      settings.theme.name === "vs-dark" ||
+      settings.theme.name === "vs-light" ||
+      settings.theme.name === "hc-black"
+    ) {
+      // Directly set Monaco's built-in theme
+      monaco.editor.setTheme(settings.theme.name);
+    } else {
+      // Use the custom defined theme
+      monaco.editor.setTheme("default");
+    }
+  };
+
   return (
     <div
       style={{
@@ -62,8 +91,8 @@ const CodeEditor = ({
       <MonacoEditor
         language={language}
         value={code}
+        beforeMount={handleBeforeMount} // Define the theme before the editor mounts
         onChange={handleEditorChange}
-        theme={settings.theme}
         options={{
           automaticLayout: true,
           lineNumbers: settings.lineNumbers,
@@ -77,16 +106,18 @@ const CodeEditor = ({
           wordWrap: settings.wordWrap,
           tabSize: 2,
           lineHeight: settings.lineHeight,
-
           renderLineHighlight: settings.errorMarking ? "all" : "none",
           renderWhitespace: "all",
           colorDecorators: true,
         }}
-        onMount={(editor, monaco) => {
-          editorRef.current = editor;
-          editor.onDidFocusEditorText(handleEditorFocus);
-          editor.onDidBlurEditorText(handleEditorBlur);
-        }}
+        theme={
+          settings.theme.name === "vs-dark" ||
+          settings.theme.name === "vs-light" ||
+          settings.theme.name === "hc-black"
+            ? settings.theme.name
+            : undefined
+        } // Directly set the theme if it's built-in
+        onMount={handleMount}
       />
     </div>
   );

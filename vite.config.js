@@ -13,4 +13,7 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    target: "esnext", // Ensure your build target supports top-level await
+  },
 });

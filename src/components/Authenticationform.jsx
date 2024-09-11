@@ -3,6 +3,7 @@ import { useForm } from "@mantine/form";
 import { IconX } from "@tabler/icons-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "./redux/AuthSlice";
 import {
@@ -21,6 +22,7 @@ import { TwitterButton } from "../components/ui/TwitterButton";
 import Spinner from "./Spinner";
 
 export function AuthenticationForm() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [type, toggle] = useToggle(["login", "register"]);
   const [loading, setLoading] = useState(false); // Optional: for showing a loading indicator
@@ -61,12 +63,14 @@ export function AuthenticationForm() {
             email: data.response.user.email,
           })
         );
+        navigate("/");
       } else {
-        // Handle error from the server
-        console.error("Error:", data.message);
+        if (data.status == "Error") {
+          form.setFieldError("password", data.error);
+        }
       }
     } catch (error) {
-      console.error("Network error:", error);
+      // console.error("Network error:", error);
     } finally {
       setLoading(false); // Stop loading indicator
     }
@@ -119,7 +123,7 @@ export function AuthenticationForm() {
                   onChange={(event) =>
                     form.setFieldValue("email", event.currentTarget.value)
                   }
-                  error={form.errors.email && "Invalid email"}
+                  error={form.errors.email}
                   radius="md"
                 />
 
@@ -131,10 +135,7 @@ export function AuthenticationForm() {
                   onChange={(event) =>
                     form.setFieldValue("password", event.currentTarget.value)
                   }
-                  error={
-                    form.errors.password &&
-                    "Password should include at least 6 characters"
-                  }
+                  error={form.errors.password}
                   radius="md"
                 />
               </Stack>

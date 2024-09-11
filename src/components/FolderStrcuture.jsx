@@ -101,7 +101,7 @@ function FolderStructure() {
 
   return (
     <div>
-      <div className="bg-[#1e1c1cdb] px-5 text-center shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] rounded-sm relative min-h-96 h-96  overflow-scroll">
+      <div className="bg-[#1e1c1cdb] px-5 text-center shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] rounded-sm relative min-h-96 h-96  overflow-y-scroll">
         <h1
           className="title-font sm:text-2xl text-xl mb-3 fontChange pt-3"
           style={{ borderBottom: "0.1px solid #C0C0C0" }}

@@ -4,7 +4,8 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import "@fontsource/ibm-plex-sans/200.css";
 import { Link } from "react-router-dom";
 import { TextGenerateEffectDemo } from "../TextGeneration";
-import { IconUserCheck, IconRun } from "@tabler/icons-react";
+import { IconUserCheck, IconCodeMinus } from "@tabler/icons-react";
+import { useSelector } from "react-redux";
 export const HeroParallax = ({ products }) => {
   const firstRow = products.slice(0, 5);
   const secondRow = products.slice(5, 10);
@@ -90,6 +91,8 @@ export const HeroParallax = ({ products }) => {
 };
 
 export const Header = () => {
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
   return (
     <div>
       <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 md:bottom-24">
@@ -107,25 +110,28 @@ export const Header = () => {
           <TextGenerateEffectDemo />
         </p>
         <div className="flex mx-2  mt-10 absolute">
-          <Link to="/auth" className="z-50">
-            <button
-              type="button"
-              class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 z-20"
-            >
-              <span className="md:text-xl text-sm flex items-center mx-1 px-1">
-                <IconUserCheck />
-                Sign up for Free
-              </span>
-            </button>
-          </Link>
+          {!isLoggedIn ? (
+            <Link to="/auth" className="z-50">
+              <button
+                type="button"
+                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
+              >
+                <span className="md:text-xl text-sm flex items-center mx-1 px-1">
+                  <IconUserCheck />
+                  Sign up for Free
+                </span>
+              </button>
+            </Link>
+          ) : null}
+
           <Link to="/code-editor" className="z-10">
             <button
-              class="rounded-md bg-amber-800 py-2.5 px-5 me-2 mb-2  border border-transparent text-center text-xl text-slate-300 transition-all shadow-md hover:shadow-lg focus:bg-amber-700 focus:shadow-none active:bg-amber-700 hover:bg-amber-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2 z-20"
               type="button"
+              class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900"
             >
               <span className="md:text-xl text-sm flex items-center mx-1 px-1">
-                <IconRun />
-                Get Start Now
+                <IconCodeMinus />
+                Demo
               </span>
             </button>
           </Link>
