@@ -7,7 +7,7 @@ const CodeEditor = ({
   onChange,
   language,
   onEditorMount,
-  isFocused,
+
   onShiftEnter,
 }) => {
   const settings = useSelector((state) => state.editorSettings);
@@ -17,12 +17,12 @@ const CodeEditor = ({
     inherit: true,
     rules: [
       {
-        background: "1c1f25",
+        background: "15161a",
         token: "",
       },
       {
         foreground: "6a9955",
-        background: "1c1f25",
+        background: "15161a",
         fontStyle: "italic",
         token: "comment.block",
       },
@@ -72,13 +72,13 @@ const CodeEditor = ({
       },
       {
         foreground: "ff0000",
-        background: "1c1f25",
+        background: "15161a",
         fontStyle: "bold",
         token: "invalid.illegal",
       },
       {
         foreground: "ff6f6f",
-        background: "1c1f25",
+        background: "15161a",
         token: "invalid.deprecated",
       },
       {
@@ -88,7 +88,7 @@ const CodeEditor = ({
     ],
     colors: {
       "editor.foreground": "#D0D0FF",
-      "editor.background": "#1c1f25",
+      "editor.background": "#15161a",
       "editor.selectionBackground": "#0a0a0b5f",
       "editor.lineHighlightBackground": "#0a0a0b5f",
       "editorCursor.foreground": "#7070FF",
@@ -108,7 +108,7 @@ const CodeEditor = ({
     return () => {
       window.removeEventListener("keydown", handleKeydown);
     };
-  }, [isFocused, onShiftEnter]);
+  }, [onShiftEnter]);
 
   // Handle editor changes
   const handleEditorChange = (value) => {
@@ -165,9 +165,10 @@ const CodeEditor = ({
   return (
     <div
       style={{
-        height: "90vh",
+        height: "82vh",
+
         fontFamily: "cursive",
-        border: isFocused ? "1px solid #A9A9A9" : "none",
+
         transition: "border 0.3s ease",
         display: "flex", // Add Flexbox
         justifyContent: "center", // Center horizontally
@@ -188,6 +189,7 @@ const CodeEditor = ({
             size: "fit",
           },
           scrollBeyondLastLine: false,
+
           fontSize: settings.fontSize,
           fontFamily: settings.fontFamily,
           wordWrap: settings.wordWrap,

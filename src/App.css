@@ -2,7 +2,7 @@
   font-family: "Roboto", sans-serif;
 }
 body {
-  background-color: #1c1f25;
+  background-color: #15161a;
 }
 .removeFLex {
   flex-wrap: nowrap;
@@ -31,4 +31,20 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+.gradient {
+  background: linear-gradient(
+    0deg,
+    #222f4a 0%,
+    rgba(14, 15, 17, 1) 72%,
+    rgba(3, 6, 7, 1) 88%
+  );
+}
+.stacks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 170px;
 }

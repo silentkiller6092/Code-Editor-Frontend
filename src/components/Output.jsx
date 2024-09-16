@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Text, Paper } from "@mantine/core";
+import { Text, Paper, ScrollArea } from "@mantine/core";
+import { useSelector } from "react-redux";
 
 function Output({ result }) {
-  const [focus, setFocus] = useState(false);
   const ref = useRef(null);
+  const settings = useSelector((state) => state.editorSettings);
 
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
@@ -18,27 +19,35 @@ function Output({ result }) {
     };
   }, []);
 
-  return (
-    <div
-      ref={ref}
-      style={{
-        fontFamily: "cursive",
-        width: "100%",
+  // Combine the default fontFamily with the settings.fontFamily
+  const combinedFontFamily = `${settings.fontFamily}, cursive`;
 
-        border: focus ? "1px solid #A9A9A9" : "none",
-        transition: "border 0.3s ease",
-      }}
-    >
-      <Paper
-        onClick={() => setFocus(true)}
-        shadow="md"
-        style={{ height: "90vh", background: "#1c1f25" }}
+  return (
+    <ScrollArea className="h-[82vh]" scrollbarSize={4}>
+      <div
+        ref={ref}
+        style={{
+          fontFamily: combinedFontFamily,
+          width: "100%",
+          borderLeftWidth: 1,
+        }}
       >
-        <Text color="white" fontSize="2xl" fontWeight="bold">
-          {result}
-        </Text>
-      </Paper>
-    </div>
+        <Paper
+          onClick={() => setFocus(true)}
+          shadow="md"
+          style={{ height: "82vh", background: "#15161a" }}
+        >
+          <Text
+            color="white"
+            fontSize="2xl"
+            fontWeight="bold"
+            fontFamily={"monospace"}
+          >
+            <p className="">{result}</p>
+          </Text>
+        </Paper>
+      </div>
+    </ScrollArea>
   );
 }
 

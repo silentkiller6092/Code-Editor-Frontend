@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "./redux/AuthSlice";
+import { useDisclosure } from "@mantine/hooks";
+import { LoadingOverlay, Box } from "@mantine/core";
 import {
   TextInput,
   PasswordInput,
@@ -23,6 +25,7 @@ import Spinner from "./Spinner";
 
 export function AuthenticationForm() {
   const navigate = useNavigate();
+  const [visible, { toggles }] = useDisclosure(true);
   const dispatch = useDispatch();
   const [type, toggle] = useToggle(["login", "register"]);
   const [loading, setLoading] = useState(false); // Optional: for showing a loading indicator

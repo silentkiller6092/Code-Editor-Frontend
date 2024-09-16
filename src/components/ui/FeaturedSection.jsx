@@ -46,7 +46,7 @@ export const HeroParallax = ({ products }) => {
   return (
     <div
       ref={ref}
-      className="h-[250vh] bg-black md:h-[400vh] md:py-2 py-20 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className=" bg-black   md:py-2 py-20 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
       <motion.div
@@ -95,8 +95,8 @@ export const Header = () => {
 
   return (
     <div>
-      <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 md:bottom-24">
-        <h2 className="text-left text-6xl sm:text-6xl md:text-8xl  mx-2 homeTitle">
+      <div className=" relative mx-auto py-20 md:py-40 px-4 w-full  left-0 md:bottom-24">
+        <h2 className="text-left text-6xl sm:text-6xl md:text-8xl xl:text-9xl  mx-2 homeTitle">
           <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
             Build Software
           </span>

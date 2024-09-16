@@ -3,6 +3,8 @@ import { Featured } from "./Featured";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login, logout } from "./redux/AuthSlice"; // Import login action
+import { Tabs } from "@mantine/core";
+import LanguageList from "./LanguageList";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -62,8 +64,26 @@ export default function Home() {
   }, [dispatch, navigate]);
 
   return (
-    <div>
+    <div className="">
       <Featured />
+      <div className="h-screen gradient w-full md:px-20 pt-32">
+        <h1 className="text-center text-4xl mb-10">Support of 60+ Languages</h1>
+        <div className="">
+          <Tabs keepMounted={false} defaultValue="first">
+            <Tabs.List className="justify-center before:content-none">
+              <Tabs.Tab value="first">Popular</Tabs.Tab>
+              <Tabs.Tab value="second">Frontend</Tabs.Tab>
+              <Tabs.Tab value="second">Backend</Tabs.Tab>
+              <Tabs.Tab value="second">FullStack</Tabs.Tab>
+            </Tabs.List>
+
+            <Tabs.Panel value="first" className="">
+              <LanguageList />
+            </Tabs.Panel>
+            <Tabs.Panel value="second">Second panel</Tabs.Panel>
+          </Tabs>
+        </div>
+      </div>
     </div>
   );
 }

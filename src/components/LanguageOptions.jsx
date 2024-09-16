@@ -5,6 +5,7 @@ import { IconDeviceFloppy, IconPlayerPlay } from "@tabler/icons-react";
 import Buttons from "./Buttons";
 import Output from "./Output";
 import "@fontsource/ibm-plex-sans";
+import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 
 function LanguageOptions() {
   const [code, setCode] = useState("");
@@ -27,7 +28,7 @@ function LanguageOptions() {
         body: code,
       });
       let data = await response.json();
-      data = data && data["response"].replace(/["']/g, "");
+      data = data["response"] && data["response"].replace(/["']/g, "");
 
       setResult(data);
     } catch (e) {
@@ -36,6 +37,7 @@ function LanguageOptions() {
   };
 
   const saveCode = () => {};
+
   useEffect(() => {
     const handleKeydown = (event) => {
       if (event.shiftKey && event.key === "Enter" && isFocused) {
@@ -50,9 +52,9 @@ function LanguageOptions() {
   }, [isFocused]);
 
   return (
-    <div>
+    <div className=" flex flex-col overflow-hidden">
       <div
-        className="bg-[#1c1f25] mt-0"
+        className="bg-[#15161a] mt-0"
         style={{ borderBottom: "0.1px solid #C0C0C0" }}
       >
         <div className="flex justify-between items-center">
@@ -64,16 +66,16 @@ function LanguageOptions() {
               dropdown: {
                 maxHeight: 200,
                 overflowY: "auto",
-                backgroundColor: "#1c1f25",
+                backgroundColor: "#15161a",
                 color: "#c0cee7",
               },
               input: {
-                backgroundColor: "#1c1f25",
+                backgroundColor: "#15161a",
                 border: "none",
                 color: "#c0cee7",
               },
               item: {
-                backgroundColor: "#1c1f25",
+                backgroundColor: "#15161a",
                 "&[data-hovered]": {
                   backgroundColor: "rgba(50,50,50,255)",
                 },
@@ -118,12 +120,14 @@ function LanguageOptions() {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row ">
-        <div className="md:w-3/5 w-full ">
+      <PanelGroup direction="horizontal" style={{ flex: 1 }}>
+        <Panel
+          defaultSize={65}
+          style={{ display: "flex", flexDirection: "column" }}
+        >
           <CodeEditor
             code={code}
             onChange={handleCodeChange}
-            isFocused={isFocused}
             onShiftEnter={executeCode}
             language={language}
             theme={"vs-dark"}
@@ -132,13 +136,12 @@ function LanguageOptions() {
               editorRef.current = focused ? editorRef.current : null;
             }}
           />
-        </div>
-
-        <div className="md:w-2/5 w-full border-t-2 md:border-none">
-          <h2 className="md:hidden text-center homeTitle">Output</h2>
+        </Panel>
+        <PanelResizeHandle />
+        <Panel style={{ display: "flex", flexDirection: "column" }}>
           <Output result={result} />
-        </div>
-      </div>
+        </Panel>
+      </PanelGroup>
     </div>
   );
 }
