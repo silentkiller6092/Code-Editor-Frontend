@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import "@fontsource/ibm-plex-sans/200.css";
 import { Link } from "react-router-dom";

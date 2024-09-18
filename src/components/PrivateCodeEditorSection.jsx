@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Tabs, Button, TextInput, Tooltip } from "@mantine/core";
-
 import {
   IconBrandJavascript,
   IconHtml,
@@ -17,6 +16,8 @@ import {
 } from "@tabler/icons-react";
 import PrivateEditor from "./templates/PrivateEditor";
 import Spinner from "./Spinner";
+import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import "../Style/customStyles.css"; // Import custom CSS for thin scrollbar
 
 function PrivateCodeEditorSection() {
   const initialFiles = [
@@ -52,6 +53,7 @@ function PrivateCodeEditorSection() {
   const [showSpinner, setShowSpinner] = useState(false);
   const [focused, setFocused] = useState(false);
   const [projectName, setProjectName] = useState("");
+
   const handleEditorChange = (index, newValue) => {
     const updatedFiles = [...files];
     updatedFiles[index].content = newValue;
@@ -108,15 +110,16 @@ function PrivateCodeEditorSection() {
   };
 
   const openSpinner = () => {
-    if (projectName.length == 0) {
-      alert("Project Name Requrie");
+    if (projectName.length === 0) {
+      alert("Project Name Required");
       return;
     }
     setShowSpinner(true);
     setTimeout(() => {
       setShowSpinner(false);
-    }, 5000); // Spinner will turn off after 10 seconds
+    }, 5000);
   };
+
   const handleOpenNewWindow = () => {
     const outputWindow = window.open();
     outputWindow.document.write(outputCode);
@@ -124,99 +127,48 @@ function PrivateCodeEditorSection() {
   };
 
   return (
-    <div className="sticky h-16 bg-[rgba(30,30,30,255)]">
-      <Tabs defaultValue={files[0]?.name || ""}>
-        <div className="flex">
-          <Tabs.List className="flex w-full removeFLex">
-            <div className="flex space-x-2">
-              {files.map((file) => (
-                <Tabs.Tab
-                  key={file.name}
-                  value={file.name}
-                  leftSection={getFileIcon(file)}
-                >
-                  {file.name}
-                </Tabs.Tab>
+    <div className="sticky bg-[#15161a]">
+      <PanelGroup direction="horizontal" style={{ flex: 1 }}>
+        <Panel
+          defaultSize={65}
+          style={{ display: "flex", flexDirection: "column" }}
+        >
+          <div>
+            <Tabs defaultValue={files[0]?.name || ""}>
+              <div className="flex">
+                {/* Updated style for horizontal scroll and thin scrollbar */}
+                <Tabs.List className="flex w-full removeFLex max-w-[100%] overflow-x-auto custom-scrollbar">
+                  <div className="flex space-x-2">
+                    {files.map((file) => (
+                      <Tabs.Tab
+                        key={file.name}
+                        value={file.name}
+                        leftSection={getFileIcon(file)}
+                      >
+                        {file.name}
+                      </Tabs.Tab>
+                    ))}
+                  </div>
+                </Tabs.List>
+              </div>
+
+              {files.map((file, index) => (
+                <Tabs.Panel key={file.name} value={file.name}>
+                  <PrivateEditor
+                    code={file.content}
+                    language={getLanguageFromExtension(file.name)}
+                    onChange={(newValue) => handleEditorChange(index, newValue)}
+                  />
+                </Tabs.Panel>
               ))}
-            </div>
-
-            {/* This div will take up the remaining space, pushing the Preview button to the right */}
-            <div className="ml-auto bg-[rgb(191 219 254)] flex justify-center items-center">
-              <Tabs.Tab
-                value="output"
-                leftSection={<IconPlayerPlay color="rgb(191 219 254)" />}
-                onClick={handleRunCode}
-              ></Tabs.Tab>
-              <Tabs.Tab
-                value="save"
-                leftSection={<IconDeviceFloppy color="rgb(191 219 254)" />}
-              ></Tabs.Tab>
-            </div>
-          </Tabs.List>
-        </div>
-
-        {files.map((file, index) => (
-          <Tabs.Panel
-            key={file.name}
-            value={file.name}
-            className="md:mx-0 mx-5 "
-          >
-            <PrivateEditor
-              code={file.content}
-              language={getLanguageFromExtension(file.name)}
-              onChange={(newValue) => handleEditorChange(index, newValue)}
-            />
-          </Tabs.Panel>
-        ))}
-        <Tabs.Panel value="output">
-          <div className="flex h-screen">
-            <div className="w-[90%]">
-              <iframe
-                title="output"
-                srcDoc={outputCode}
-                className="w-full h-screen border border-gray-300"
-              />
-            </div>
-            <div className="w-[10%] flex justify-start  bg-white">
-              <IconExternalLink
-                onClick={handleOpenNewWindow}
-                className="cursor-pointer text-black border-none"
-              />
-            </div>
+            </Tabs>
           </div>
-        </Tabs.Panel>
-        <Tabs.Panel value="save">
-          <div className="flex justify-center flex-col mt-28   items-center ">
-            <TextInput
-              placeholder="Enter Your Project Name"
-              size="md"
-              mb={20}
-              mt={20}
-              onFocus={() => setFocused(true)}
-              onBlur={() => setFocused(false)}
-              onChange={(e) => setProjectName(e.target.value)}
-              inputContainer={(children) => (
-                <Tooltip
-                  label="Additional information"
-                  position="top-start"
-                  opened={focused}
-                >
-                  {children}
-                </Tooltip>
-              )}
-            />
-            <Button
-              variant="light"
-              leftSection={<IconPhoto size={14} />}
-              onClick={openSpinner}
-              rightSection={<IconArrowRight size={14} />}
-            >
-              Save
-            </Button>
-          </div>
-          {showSpinner ? <Spinner /> : <div>Content Saved</div>}
-        </Tabs.Panel>
-      </Tabs>
+        </Panel>
+        <PanelResizeHandle />
+        <Panel style={{ display: "flex", flexDirection: "column" }}>
+          <div>Ouput</div>
+        </Panel>
+      </PanelGroup>
     </div>
   );
 }

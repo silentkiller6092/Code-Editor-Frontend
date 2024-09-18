@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const editorSettingsSlice = createSlice({
   name: "editorSettings",
   initialState: {
-    theme: { name: "vs-dark" },
+    theme: { name: "" },
     themeChanged: false, // New flag to track theme changes
     fontSize: 14,
     fontFamily: "monospace",

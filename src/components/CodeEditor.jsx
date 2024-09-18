@@ -1,4 +1,5 @@
 import MonacoEditor from "@monaco-editor/react";
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 
@@ -7,7 +8,6 @@ const CodeEditor = ({
   onChange,
   language,
   onEditorMount,
-
   onShiftEnter,
 }) => {
   const settings = useSelector((state) => state.editorSettings);

@@ -6,7 +6,8 @@ body {
 }
 .removeFLex {
   flex-wrap: nowrap;
-  overflow-x: scroll;
+
+  background-color: #15161a;
 }
 .homeTitle {
   font-family: "IBM Plex Sans", sans-serif;
@@ -15,20 +16,17 @@ body {
   font-family: "Quicksand Variable", sans-serif;
 }
 ::-webkit-scrollbar {
-  width: 2px;
+  width: 1px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
-  background: #1c1f25;
+  background: #15161a;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
