@@ -140,7 +140,7 @@ const PrivateEditor = ({ code, onChange, language }) => {
   };
 
   return (
-    <div className="h-[82vh] w-full relative">
+    <div className="h-screen w-full relative">
       <MonacoEditor
         beforeMount={handleBeforeMount}
         language={language}

@@ -157,7 +157,11 @@ function ProjectTemplate() {
                       {getFileIcon(file)}
 
                       <div className="flex-1 flex justify-between items-center">
-                        <Link to={"/workspace/1/htmlcss"}>
+                        <Link
+                          to={"/workspace/1/htmlcss"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           <span>{file.name}</span>
                         </Link>
                         <div className="text-right">

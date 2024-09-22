@@ -46,3 +46,7 @@ body {
   gap: 12px;
   min-height: 170px;
 }
+.editor-wrapper .monaco-editor,
+.editor-wrapper .overflow-guard {
+  border-radius: 10px;
+}

@@ -2,7 +2,7 @@ import { AppShell, Burger, MantineProvider } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import React from "react";
 import { Flex, Text } from "@mantine/core";
-import { IconBrandVscode } from "@tabler/icons-react";
+import { GeistProvider, CssBaseline } from "@geist-ui/core";
 import "@mantine/core/styles.css";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import LanguageOptions from "./components/LanguageOptions";
@@ -14,7 +14,6 @@ import { AuthenticationForm } from "./components/Authenticationform";
 import UserProfile from "./components/Profile";
 import Logout from "./components/Logout";
 import Home from "./components/Home";
-import Test from "./components/Test";
 
 function App() {
   const [opened, { toggle }] = useDisclosure();
@@ -76,7 +75,7 @@ function App() {
         <Routes>
           {/* Render Home page without AppShell */}
           <Route path="/" element={<Home />} />
-          <Route path="/test" element={<Test />} />
+          <Route path="/workspace/:id/:type" element={<PrivateCodeEditor />} />
           {/* Wrap all other routes in the AppShellLayout */}
           <Route element={<AppShellLayout />}>
             <Route path="/code-editor" element={<LanguageOptions />} />
@@ -85,10 +84,6 @@ function App() {
             <Route path="/account" element={<UserProfile />} />
             <Route path="/logout" element={<Logout />} />
 
-            <Route
-              path="/workspace/:id/:type"
-              element={<PrivateCodeEditor />}
-            />
             <Route path="/auth" element={<AuthenticationForm />} />
           </Route>
         </Routes>

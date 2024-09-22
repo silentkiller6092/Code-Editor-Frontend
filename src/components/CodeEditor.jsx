@@ -165,8 +165,6 @@ const CodeEditor = ({
   return (
     <div
       style={{
-        height: "82vh",
-
         fontFamily: "cursive",
 
         transition: "border 0.3s ease",
@@ -174,7 +172,7 @@ const CodeEditor = ({
         justifyContent: "center", // Center horizontally
         alignItems: "center", // Center vertically
       }}
-      className="code-editor"
+      className="code-editor h-screen"
     >
       <MonacoEditor
         language={language}
