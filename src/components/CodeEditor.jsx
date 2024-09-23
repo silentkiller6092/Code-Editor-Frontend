@@ -2,7 +2,7 @@ import MonacoEditor from "@monaco-editor/react";
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
-
+import { useMediaQuery } from "@mantine/hooks";
 const CodeEditor = ({
   code,
   onChange,
@@ -11,6 +11,7 @@ const CodeEditor = ({
   onShiftEnter,
 }) => {
   const settings = useSelector((state) => state.editorSettings);
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const editorRef = useRef(null);
   const defaultTheme = {
     base: "vs-dark",
@@ -160,19 +161,25 @@ const CodeEditor = ({
     } else {
       monaco.editor.setTheme("home");
     }
+    editor.updateOptions({
+      scrollbar: {
+        alwaysConsumeMouseWheel: false,
+      },
+    });
   };
 
   return (
     <div
       style={{
         fontFamily: "cursive",
-
         transition: "border 0.3s ease",
         display: "flex", // Add Flexbox
         justifyContent: "center", // Center horizontally
         alignItems: "center", // Center vertically
       }}
-      className="code-editor h-screen"
+      className={`code-editor h-screen ${
+        isMobile ? "border-t-2 border-gray-600" : "border-2 border-gray-600"
+      } `}
     >
       <MonacoEditor
         language={language}

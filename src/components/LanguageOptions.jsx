@@ -1,21 +1,20 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useRef, useEffect } from "react";
 import CodeEditor from "./CodeEditor";
-import { Select } from "@mantine/core";
+import { Code, Select } from "@mantine/core";
 import { IconDeviceFloppy, IconPlayerPlay } from "@tabler/icons-react";
 import Buttons from "./Buttons";
 import Output from "./Output";
 import "@fontsource/ibm-plex-sans";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-
+import { useMediaQuery } from "@mantine/hooks";
 function LanguageOptions() {
   const [code, setCode] = useState("");
   const [result, setResult] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [language, setLanguage] = useState("javascript");
-
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const editorRef = useRef(null);
-
   const handleCodeChange = (newCode) => {
     setCode(newCode);
   };
@@ -53,15 +52,16 @@ function LanguageOptions() {
   }, [isFocused]);
 
   return (
-    <div className=" flex flex-col overflow-hidden">
-      <div
-        className="bg-[#15161a] mt-0"
-        style={{ borderBottom: "0.1px solid #C0C0C0" }}
-      >
-        <div className="flex justify-between items-center">
+    <div class="flex md:flex-row flex-wrap mx-3  md:py-0">
+      <div class="w-full md:w-3/4 text-center">
+        <div
+          className={`flex flex-col bg-[#15161a] ${
+            isMobile ? "border-2 border-gray-600 mt-4" : ""
+          } `}
+        >
           <Select
             placeholder="Pick a language"
-            className="mb-1  text-white"
+            className=" p-[6px] text-white sticky"
             withScrollArea={false}
             styles={{
               dropdown: {
@@ -105,44 +105,22 @@ function LanguageOptions() {
             value={language}
             onChange={setLanguage}
           />
-
-          <div className="flex space-x-2">
-            <Buttons
-              IconName={IconPlayerPlay}
-              functionName={executeCode}
-              Desc={"Run Code"}
-            />
-            <Buttons
-              IconName={IconDeviceFloppy}
-              functionName={saveCode}
-              Desc={"Save Code"}
-            />
-          </div>
-        </div>
-      </div>
-
-      <PanelGroup direction="horizontal" style={{ flex: 1 }}>
-        <Panel
-          defaultSize={65}
-          style={{ display: "flex", flexDirection: "column" }}
-        >
           <CodeEditor
             code={code}
             onChange={handleCodeChange}
             onShiftEnter={executeCode}
             language={language}
-            theme={"vs-dark"}
+            theme="vs-dark"
             onEditorMount={(focused) => {
               setIsFocused(focused);
               editorRef.current = focused ? editorRef.current : null;
             }}
           />
-        </Panel>
-        <PanelResizeHandle />
-        <Panel style={{ display: "flex", flexDirection: "column" }}>
-          <Output result={result} />
-        </Panel>
-      </PanelGroup>
+        </div>
+      </div>
+      <div class="w-full  md:w-1/4  text-gray-300">
+        <Output privateEditor={true} />
+      </div>
     </div>
   );
 }

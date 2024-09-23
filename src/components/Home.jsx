@@ -60,7 +60,7 @@ export default function Home() {
       }
     };
 
-    validateAccessToken();
+    // validateAccessToken();
   }, [dispatch, navigate]);
 
   return (

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Text, Paper, ScrollArea } from "@mantine/core";
+import { ScrollArea } from "@mantine/core";
 import { useSelector } from "react-redux";
-
+import { useMediaQuery } from "@mantine/hooks";
 function Output({ result, privateEditor = false }) {
   const ref = useRef(null);
   const [focus, setFocus] = useState(false); // Define setFocus state
   const settings = useSelector((state) => state.editorSettings);
-
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       setFocus(false);
@@ -24,73 +24,36 @@ function Output({ result, privateEditor = false }) {
   const combinedFontFamily = `${settings.fontFamily}, cursive`;
 
   return (
-    <div>
-      {privateEditor ? (
-        <div className="">
-          <div className="border-b-2 p-3 border-gray-600">
-            <span className="">Output</span>
-          </div>
-          <div>
-            <ScrollArea
-              className="h-screen border-l-2 border-gray-600"
-              scrollbarSize={4}
-            >
-              <div
-                ref={ref}
-                style={{
-                  fontFamily: combinedFontFamily,
-                  width: "100%",
-                  borderLeftWidth: 1,
-                }}
-              >
-                <Paper
-                  onClick={() => setFocus(true)}
-                  shadow="md"
-                  style={{ height: "100vh", background: "#15161a" }} // Use valid CSS
-                >
-                  <Text
-                    color="white"
-                    fontSize="2xl"
-                    fontWeight="bold"
-                    fontFamily={"monospace"}
-                  >
-                    <p className="">{result}</p>
-                  </Text>
-                </Paper>
-              </div>
-            </ScrollArea>
-          </div>
-        </div>
-      ) : (
-        <ScrollArea
-          className="h-screen border-l-2 border-gray-600"
-          scrollbarSize={4}
-        >
-          <div
-            ref={ref}
-            style={{
-              fontFamily: combinedFontFamily,
-              width: "100%",
-              borderLeftWidth: 1,
-            }}
-          >
-            <Paper
-              onClick={() => setFocus(true)}
-              shadow="md"
-              style={{ height: "100vh", background: "#15161a" }} // Use valid CSS
-            >
-              <Text
-                color="white"
-                fontSize="2xl"
-                fontWeight="bold"
-                fontFamily={"monospace"}
-              >
-                <p className="">{result}</p>
-              </Text>
-            </Paper>
-          </div>
+    <div className="mb-2">
+      <div
+        className={`border-b-2 p-3 border-gray-600 ${
+          isMobile ? "border-2 p-3 border-gray-600" : ""
+        }`}
+      >
+        <span className="">Output</span>
+      </div>
+      <div
+        className={`border-r-2 border-b-2 p-3 border-gray-600 ${
+          isMobile ? "border-2 p-3 border-gray-600" : ""
+        } h-screen`}
+      >
+        <ScrollArea h={500}>
+          <p className="text-justify px-4 ">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+            Temporibus, nisi qui! Laudantium repellat mollitia aut aspernatur
+            animi quae fuga deleniti voluptate! In consectetur, sit dicta,
+            tenetur officia et nihil vero ipsum reiciendis nostrum libero
+            nesciunt deserunt rerum iste incidunt delectus culpa aliquid hic
+            dignissimos asperiores. Non beatae pariatur voluptas voluptatibus!
+            Facere nostrum officiis corporis quidem architecto deserunt, modi ea
+            dolores error possimus eum laborum cupiditate maiores. Modi adipisci
+            nesciunt nobis inventore veniam quos, reiciendis esse maiores!
+            Possimus rerum ut omnis error beatae consequuntur dolor numquam
+            minus iusto ratione ipsa non incidunt enim quaerat aspernatur nisi,
+            officiis maiores porro quibusdam cum.
+          </p>
         </ScrollArea>
-      )}
+      </div>
     </div>
   );
 }

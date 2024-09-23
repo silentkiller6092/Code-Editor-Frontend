@@ -40,7 +40,7 @@ function App() {
       }}
     >
       <AppShell.Header>
-        <div className="flex justify-between pt-2 items-center align-middle flex-row ">
+        <div className="flex justify-between pt-2 ml-3 items-center align-middle flex-row ">
           <Flex align="center">
             <Burger
               opened={opened}
@@ -54,12 +54,12 @@ function App() {
             </Text>
           </Flex>
           <Flex>
-            <p>Hi User</p>
+            <p className="mr-2">Hi User</p>
           </Flex>
         </div>
       </AppShell.Header>
 
-      <AppShell.Navbar px="md" style={{ width: "120px" }}>
+      <AppShell.Navbar px="md" style={{ width: "120px", height: "100%" }}>
         <NavbarMinimal />
       </AppShell.Navbar>
 

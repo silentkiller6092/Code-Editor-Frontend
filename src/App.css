@@ -15,20 +15,8 @@ body {
 .homedefination {
   font-family: "Quicksand Variable", sans-serif;
 }
-::-webkit-scrollbar {
-  width: 1px;
-}
-
-::-webkit-scrollbar-track {
-  background: #15161a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+.iPadShowKeyboard {
+  display: none;
 }
 .gradient {
   background: linear-gradient(
