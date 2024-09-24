@@ -24,7 +24,7 @@ function Output({ result, privateEditor = false }) {
   const combinedFontFamily = `${settings.fontFamily}, cursive`;
 
   return (
-    <div className="mb-2">
+    <div className="">
       <div
         className={`border-b-2 p-3 border-gray-600 ${
           isMobile ? "border-2 p-3 border-gray-600" : ""
