@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { ScrollArea } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "@mantine/hooks";
-function Output({ result, privateEditor = false }) {
+import { Button } from "@mantine/core";
+import { IconPlayerPlay, IconArrowRight } from "@tabler/icons-react";
+function Output({ result }) {
   const ref = useRef(null);
   const [focus, setFocus] = useState(false); // Define setFocus state
   const settings = useSelector((state) => state.editorSettings);
@@ -26,11 +28,18 @@ function Output({ result, privateEditor = false }) {
   return (
     <div className="">
       <div
-        className={`border-b-2 p-3 border-gray-600 ${
+        className={`border-b-2 p-[6px] border-gray-600 ${
           isMobile ? "border-2 p-3 border-gray-600" : ""
         }`}
       >
-        <span className="">Output</span>
+        <div className="flex justify-end gap-10">
+          <Button variant="light" leftSection={<IconPlayerPlay size={16} />}>
+            Run
+          </Button>
+          <Button variant="light" leftSection={<IconPlayerPlay size={16} />}>
+            Run
+          </Button>
+        </div>
       </div>
       <div
         className={`border-r-2 border-b-2 p-3 border-gray-600 ${
